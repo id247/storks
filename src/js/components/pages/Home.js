@@ -110,7 +110,7 @@ class Home extends React.Component {
 
 								<button 
 									className="home-activities__button home-activities__button--3"
-									onClick={this._selectActivityHandler('stickest')}
+									onClick={this._selectActivityHandler('stickers')}
 								>
 									Отправь стикер другу
 								</button>

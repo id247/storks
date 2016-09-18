@@ -47,6 +47,16 @@
 	&__page{
 		min-height: 100vh;
 		padding: 5% 10px;
+
+		background: #2d64b6 url(../images/bg/home.jpg) 50% 0 no-repeat;
+		background-size: cover;
+		color: #fff;
+
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
 	}
 
 	&__loader{
@@ -134,16 +144,7 @@
  * ========================================================================== */
 
 .team{
-	background: #2d64b6 url(../images/bg/team.jpg) 50% 0 no-repeat;
-	background-size: cover;
-	position: relative;
-	color: #fff;
-
-	text-align: center;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	background-image: url(../images/bg/team.jpg);
 
 	&__logo{
 		position: absolute;
@@ -297,14 +298,6 @@
  * ========================================================================== */
 
 .home{
-	background: #2d64b6 url(../images/bg/home.jpg) 50% 0 no-repeat;
-	background-size: cover;
-	color: #fff;
-	position: relative;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	
 	&__counters{
 		position: absolute;
@@ -390,9 +383,6 @@
  * ========================================================================== */
 
 .quiz{
-	background: #2d64b6 url(../images/bg/home.jpg) 50% 0 no-repeat;
-	background-size: cover;
-	color: #fff;
 
 	&:after{
 		content: url(../images/stork.png);
@@ -401,11 +391,6 @@
 		left: 50%;
 		margin: 0 0 0 200px;
 	}
-
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
 
 
 	&__logo{
@@ -509,14 +494,6 @@
  * ========================================================================== */
 
 .game{
-	background: #2d64b6 url(../images/bg/home.jpg) 50% 0 no-repeat;
-	background-size: cover;
-	color: #fff;
-
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
 
 
 	&__logo{
@@ -600,3 +577,77 @@
 	}
 }
 
+
+/* ==========================================================================
+ * stickers
+ * ========================================================================== */
+
+.stickers{
+	&__logo{
+		position: absolute;
+		top: 30px;
+		left: 30px;
+	}
+	
+	&__counters{
+		position: absolute;
+		top: 140px;
+		left: 0;
+	}
+
+	&__title{
+		font-size: 26px;
+		margin: 0 0 40px;
+		text-align: center;
+	}
+
+	&__list{
+		text-align: center;
+		max-width: 1000px;
+		margin: 0 0 50px;
+	}
+
+	&__item{
+		display: inline-block;
+		margin: 0 30px 50px;
+	}
+
+	&__button-placeholder{
+		text-align: center;
+	}
+}
+
+.stickers-item{
+
+	&__label{
+		display: block;
+		position: relative;
+		cursor: pointer;
+	}
+
+	&__input{
+		position: absolute;
+		left: -99999px;
+
+
+		&:checked + .stickers-item__image-placeholder{
+			transform: scale(.98);
+			box-shadow: 0 0 20px rgba(255,255,255,1),
+						0 0 10px rgba(255,255,255,1);
+		}
+	}
+
+	&__image-placeholder{
+		transition: all .2s;
+		display: block;
+		width: 185px;
+		height: 185px;
+		overflow: hidden;
+		border-radius: 50%;
+	}
+
+	&__image{
+		width: 100%;
+		height: 100%;
+	}
+}
