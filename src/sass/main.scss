@@ -365,6 +365,8 @@
 		cursor: pointer;
 		transition: all .1s;
 
+		outline: none;
+
 		&:hover{
 			transform: scale(1.1);
 		}
@@ -472,11 +474,33 @@
 		font-family: $futuris;
 		color: #fff;
 		cursor: pointer;
-
 		outline: none;
 
 		&:hover{
 			text-shadow: 0 0 30px #fff;
 		}
+	}
+}
+
+.quiz-results{
+	text-align: center;
+
+	&__title{
+		font-size: 36px;
+		margin: 0 0 20px;
+		text-transform: uppercase;
+	}
+
+	&__list{
+		font-size: 26px;
+		margin: 0 0 20px;
+	}
+
+	&__item{
+		margin: 0 0 10px;
+	}
+
+	&__buttton-placeholder{
+		
 	}
 }

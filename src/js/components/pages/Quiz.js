@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import { PromoOptions } from 'appSettings';
 
-import * as quizActions from '../../actions/quiz';
+import Button from '../../components/common/Button';
+
 import * as asyncActions from '../../actions/async';
 import * as pageActions from '../../actions/page';
 
@@ -19,13 +20,13 @@ const questions = [
 		correct: 'Джуниор',
 	},
 	{
-		title: 'Как зовут лучшего аиста в курьерской службе? 2',
+		title: 'Кто проработал в офисе все выходные?',
 		answers: [
-			'Джуниор',
-			'Джери',
-			'Джаред',
+			'Санька',
+			'Савятка',
+			'Другой Санька, который плохой',
 		],
-		correct: 'Джуниор',
+		correct: 'Санька',
 	},
 ];
 
@@ -34,31 +35,90 @@ class Quiz extends React.Component {
 		super(props);
 		this.state = {
 			correctAnswers: 0,
+			startTime: 0,
+			time: 0,
+			showResults: false,
+			currentQuestion: 1,
 		};
+
 	}
 
 	componentWillMount(){
-		const { props } = this;	
+		const { props } = this;
+
+		if (!props.profile){
+			props.redirect('/');
+			return false;
+		}
+	}
+
+	componentWillUnmount(){
+		this._stopTimer();
 	}
 
 	componentDidMount(){
-		const { props } = this;		
+		this._startTimer();
+	}
+
+	_startTimer(){
+
+		this.setState({
+			...this.state,
+			...{
+				startTime: new Date().getTime(),
+			}
+		});
+
+		this.timer = setInterval(this._timer.bind(this), 50);
+	}
+
+	_stopTimer(){
+		clearInterval(this.timer);
+	}
+
+	_timer(){
+		this.setState({
+			...this.state,
+			...{
+				time: new Date().getTime() - this.state.startTime,
+			}
+		});
+	}
+
+	_getTime(milliseconds){
+		const mseconds =(milliseconds%1000).toFixed(2);
+		const seconds = ((milliseconds/1000)%60).toFixed(1);
+		const minutes = Math.round((seconds/(1000*60))%60);
+
+		return minutes + ':' + seconds;
 	}
 
 	_nextQuestion(){
 		const { props, state } = this;
 
-		if (props.quiz.currentQuestion === questions.length){
+		if (state.currentQuestion === questions.length){
 			//props.getResults(state.answers);
-			
-			console.log('result is ' + this.state.correctAnswers );
+
+			this._stopTimer();
+			this.setState({
+				...this.state,
+				...{
+					showResults: true,
+				}
+			});
+
 		}else{
-			props.quizSetCurrentQuestion( props.quiz.currentQuestion + 1 );
-		}		
+			this.setState({
+				...this.state,
+				...{
+					currentQuestion: this.state.currentQuestion + 1,
+				}
+			});
+		}
 	}
 
 	_correctAnswer(){
-		
+
 		this.setState({
 			...this.state,
 			...{
@@ -66,7 +126,7 @@ class Quiz extends React.Component {
 			}
 		});
 
-		console.log(this.state);		
+		console.log(this.state);
 	}
 
 	_selectAnswerHandler = (questionIndex, answer) => (e) => {
@@ -78,32 +138,24 @@ class Quiz extends React.Component {
 		}
 
 		setTimeout(() => { //hack for update state twice
-		 	this._nextQuestion();	
+		 	this._nextQuestion();
 		}, 0);
-		
+
 	}
 
-	_image(questionIndex){
-		return(
-
-			<div className="quiz__image-placeholder">
-
-				<img src={(PromoOptions.cdn + 'images/quiz/' + questionIndex + '.png')} alt="" className="quiz__image"/>
-
-			</div>
-
-		);
+	_goBackHandler = () => (e) => {
+		this.props.redirect('/');
 	}
 
 
 	_question(questionIndex, question){
-		const { props } = this;
+		const { props, state } = this;
 
 		return(
-			<div 
+			<div
 				className={(
-					'quiz__item ' 
-					+ ( props.quiz.currentQuestion === questionIndex ? 'quiz__item--visible' : '') 
+					'quiz__item '
+					+ ( state.currentQuestion === questionIndex ? 'quiz__item--visible' : '')
 					+ ' quiz-item'
 					)}
 				key={questionIndex}
@@ -119,10 +171,10 @@ class Quiz extends React.Component {
 
 					<ul className="quiz-item__answers">
 
-						{question.answers.map( answer => (
-							<li className="quiz-item__answer">
+						{question.answers.map( (answer, i) => (
+							<li className="quiz-item__answer" key={questionIndex + i}>
 
-								<button 
+								<button
 									className="quiz-item__button"
 									onClick={this._selectAnswerHandler(questionIndex, answer)}
 								>
@@ -140,7 +192,7 @@ class Quiz extends React.Component {
 
 
 	render(){
-		const { props } = this;
+		const { props, state } = this;
 
 
 		return(
@@ -166,7 +218,7 @@ class Quiz extends React.Component {
 
 								<div className="counters__data">
 									<span className="counters__text">
-										01:33
+										{this._getTime(state.time)}
 									</span>
 								</div>
 
@@ -180,13 +232,59 @@ class Quiz extends React.Component {
 
 				<div className="quiz__content">
 
-					<div className="quiz__questions">
+					{
+						state.showResults
+						?
+						(
+							<div className="quiz__results quiz-results">
 
-						{questions.map( (question, index) => (
-							this._question(index + 1, question)
-						))}
+								<div className="quiz-results__title">
+									Результаты:
+								</div>
 
-					</div>
+								<ul className="quiz-results__list">
+
+									<li className="quiz-results__item">
+
+										Правильных ответов: {state.correctAnswers}
+
+									</li>
+
+									<li className="quiz-results__item">
+
+										Время: {this._getTime(state.time)}
+
+									</li>
+
+								</ul>	
+
+								<div className="quiz-results__button-placeholder">						
+
+									<Button
+										mixClass="quiz-results__button"
+										size="m"
+										color="orange"
+										type="button"
+										onClickHandler={this._goBackHandler()}
+									>
+										<span className="button__text">Назад к активностям</span>
+									</Button>
+
+								</div>	
+
+							</div>
+						)
+						:
+						(
+						<div className="quiz__questions">
+
+							{questions.map( (question, index) => (
+								this._question(index + 1, question)
+							))}
+
+						</div>
+						)
+					}
 
 				</div>
 
@@ -203,9 +301,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-	quizSetCurrentQuestion: (questionId) => dispatch(quizActions.quizSetCurrentQuestion(questionId)), 
-	getResults: (data) => dispatch(asyncActions.getResults(data)), 
-	redirect: (page) => dispatch(pageActions.setPageWithoutHistory(page)), 
+	getResults: (data) => dispatch(asyncActions.getResults(data)),
+	redirect: (page) => dispatch(pageActions.setPageWithoutHistory(page)),
 });
 
 Quiz.propTypes = {
