@@ -97,7 +97,7 @@ export function getInitialData() {
 			dispatch(loadingActions.loadingHide());
 
 			dispatch(userActions.userSet(user));
-			dispatch(pageActions.setPageWithoutHistory('/'));
+			//dispatch(pageActions.setPageWithoutHistory('/'));
 		})
 		.catch( err => { 
 			dispatch(loadingActions.loadingHide());

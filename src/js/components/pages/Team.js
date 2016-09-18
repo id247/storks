@@ -15,6 +15,21 @@ class Team extends React.Component {
 		// }
 	}
 
+	_selectTeam(team){
+		const { props } = this;
+		if (!props.profile){
+			props.login();
+			return;
+		}
+
+		props.redirect('/');
+	}
+
+	_selectTeamHandler = (team) => (e) => {
+		e.preventDefault();
+		this._selectTeam(team);
+	}
+
 	render(){
 		const { props } = this;
 
@@ -80,7 +95,7 @@ class Team extends React.Component {
 									size="m"
 									color="orange"
 									type="button"
-									onClickHandler={props.login}
+									onClickHandler={this._selectTeamHandler('parents')}
 								>
 									<span className="button__text">Родители</span>
 								</Button>
@@ -94,7 +109,7 @@ class Team extends React.Component {
 									size="m"
 									color="orange"
 									type="button"
-									onClickHandler={props.login}
+									onClickHandler={this._selectTeamHandler('children')}
 								>
 									<span className="button__text">Дети</span>
 								</Button>

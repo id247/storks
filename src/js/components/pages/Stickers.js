@@ -92,7 +92,7 @@ class Stickers extends React.Component {
 							size="m"
 							color="orange"
 							type="button"
-							onClickHandler={props.login}
+							//onClickHandler={props.login}
 						>
 							<span className="button__text">Отправить</span>
 						</Button>
