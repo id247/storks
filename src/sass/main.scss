@@ -504,3 +504,99 @@
 		
 	}
 }
+/* ==========================================================================
+ * game
+ * ========================================================================== */
+
+.game{
+	background: #2d64b6 url(../images/bg/home.jpg) 50% 0 no-repeat;
+	background-size: cover;
+	color: #fff;
+
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+
+	&__logo{
+		position: absolute;
+		top: 30px;
+		left: 30px;
+	}
+	
+	&__counters{
+		position: absolute;
+		top: 140px;
+		left: 0;
+	}
+
+	&__content{
+		
+	}
+
+	&__images{
+		
+	}
+}
+
+.game-images{
+	text-align: center;
+
+	&__title{
+		margin: 0 0 20px;
+		font-size: 36px;
+	}
+
+	&__list{
+		margin: 0 0 -20px;
+	}
+
+	&__item{
+		display: inline-block;
+		margin: 0 10px 20px;
+	}	
+
+}	
+
+.game-image{
+	position: relative;
+
+	&__button{
+		border: 0;
+		background: none;
+		background: rgba(255,255,255,.5);
+		min-width: 20px;
+		min-height: 20px;
+		display: block;
+		border-radius: 15px;
+		position: absolute;
+
+		outline: none;
+	}
+
+}
+
+.game-results{
+	text-align: center;
+
+	&__title{
+		font-size: 36px;
+		margin: 0 0 20px;
+		text-transform: uppercase;
+	}
+
+	&__list{
+		font-size: 26px;
+		margin: 0 0 20px;
+	}
+
+	&__item{
+		margin: 0 0 10px;
+	}
+
+	&__buttton-placeholder{
+		
+	}
+}
+

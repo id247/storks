@@ -10,6 +10,7 @@ import App 			from '../components/App';
 import Team 		from '../components/pages/Team';
 import Home 		from '../components/pages/Home';
 import Quiz 		from '../components/pages/Quiz';
+import Game 		from '../components/pages/Game';
 
 const routes = (
 	<Router history={hashHistory}>
@@ -17,6 +18,7 @@ const routes = (
 			<IndexRoute component={Home} />
 			<Route path="team" component={Team} />
 			<Route path="quiz" component={Quiz} />
+			<Route path="game" component={Game} />
 		</Route>		
 	</Router>
 );

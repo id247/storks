@@ -14,5 +14,5 @@ export const APIoptions = {
 export const PromoOptions = {	
 	url: 'http://localhost:9000',
 	server: 'https://staging.dnevnik.ru',
-	sdn: 'http://localhost:9000',
+	cdn: 'http://localhost:9000/assets/',
 }
