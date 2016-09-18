@@ -1,0 +1,23 @@
+
+
+	</div> <!-- end .container -->
+
+	@@include("../common/modals.html", {})
+
+	<script src="https://ad.csdnevnik.ru/special/prodaction/OAuth2/hello.min.js"></script>
+	<!-- main script -->
+	@@if (server === "dnevnik"){
+	<script src="assets/js/dnevnik.min.js"></script>
+	}	
+	@@if (server === "mosreg"){
+	<script src="assets/js/mosreg.min.js"></script>
+	}
+	@@if (server === "staging"){
+	<script src="assets/js/staging.min.js"></script>
+	}
+	@@if (server === "local"){	
+	<script src="http://localhost:3000/assets/js/local.min.js"></script>
+	}
+
+</body>
+</html>

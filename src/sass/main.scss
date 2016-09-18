@@ -1,0 +1,482 @@
+@charset "UTF-8";
+/* ==========================================================================
+ * Layout
+ * ========================================================================== */
+
+.container{
+	overflow: hidden;
+	position: relative;
+
+
+}
+
+/* ==========================================================================
+ * section
+ * ========================================================================== */
+
+.section{
+	padding: 80px 0 80px;
+
+	&__wrap{
+		@include clearfix;
+		max-width: 1000px;
+		padding: 0 10px;
+		margin: auto;
+	}
+
+	&__title{
+		text-align: center;
+		margin: 0 0 40px;
+		font-weight: 700;
+		font-size: 36px;
+		line-height: (50/36);
+	}
+
+	&__text{
+		margin: 0 0 30px;		
+	}
+}
+
+
+/* ==========================================================================
+ * app
+ * ========================================================================== */
+
+.app{
+
+	&__page{
+		min-height: 100vh;
+		padding: 5% 10px;
+	}
+
+	&__loader{
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 500;
+	}
+
+	&__error{
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 550;
+	}
+
+}
+
+/* ==========================================================================
+ * error-message
+ * ========================================================================== */
+
+.error-message{
+	padding: 10px;
+	background: #ff7f7f;
+}
+ 
+
+/* ==========================================================================
+ * loader
+ * ========================================================================== */
+
+.loader{
+	background: rgba(255,255,255,.5);	
+	text-align: center;
+	opacity: 0;
+	visibility: hidden;
+	
+	transition: all .2s;
+
+	display: flex;
+
+	align-items: center;
+	justify-content: center;
+	
+	&__content{
+		width: 80px;
+		height: 80px;
+		display: inline-block;
+		animation: spin .6s infinite linear;
+
+		svg{
+			width: 80px;
+			height: 80px;
+		}
+	}
+
+	&--visible{
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+
+/* ==========================================================================
+ * storks-logo
+ * ========================================================================== */
+
+.storks-logo{
+	display: inline-block;
+	text-indent: -9999px;
+	@include sprite($team-logo);
+}
+
+/* ==========================================================================
+ * team
+ * ========================================================================== */
+
+.team{
+	background: #2d64b6 url(../images/bg/team.jpg) 50% 0 no-repeat;
+	background-size: cover;
+	position: relative;
+	color: #fff;
+
+	text-align: center;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&__logo{
+		position: absolute;
+		top: 30px;
+		left: 30px;
+	}
+
+	&__activities{
+		margin: 0 0 25px;
+	}
+
+	&__{
+		
+	}
+}
+
+.team-activities{
+	
+	&__list{
+		
+	}
+
+	&__item{
+		display: inline-block;
+		vertical-align: top;
+		margin: 0 12px;
+		position: relative;
+
+		&:before{
+			content: '';
+			position: absolute;
+		}
+		
+		&:nth-child(1):before{
+			top: 15px;
+			left: 134px;
+			@include sprite($team-activities-arrow-1);
+		}
+		
+		&:nth-child(2):before{
+			bottom: 15px;
+			left: 134px;
+			@include sprite($team-activities-arrow-2);
+		}
+	}
+
+	&__button{
+		outline: none;
+		background: none;
+		border: 0;
+		color: #fff;
+		font-size: 18px;
+		font-family: $futuris;
+		padding: 0;
+		margin: 0;
+				
+		&--1{
+			@include sprite($team-activities-1);
+		}
+
+		&--2{
+			@include sprite($team-activities-2);
+		}
+
+		&--3{
+			@include sprite($team-activities-3);
+		}
+	}
+}
+
+.team-select{
+	color: #fff;
+
+	&__title{
+		text-transform: uppercase;
+		font-size: 36px;
+		margin: 0 0 20px;
+	}
+
+	&__buttons{
+		text-align: center;
+	}
+
+	&__button-placeholder{
+		display: inline-block;
+		margin: 0 10px;
+	}
+
+	&__button{
+		width: 295px;
+	}
+}
+
+/* ==========================================================================
+ * counters
+ * ========================================================================== */
+
+.counters{
+
+	&__list{
+		margin: 0 0 0 -30px;
+	}
+
+	&__item{
+		margin: 0 0 20px;
+		&:last-child{
+			margin-bottom: 0;
+		}
+	}
+
+	&__content{
+		display: inline-block;
+		@include clearfix;
+		font-size: 18px;
+		color: #fff;
+		border-radius: 0 6px 6px 0;		
+
+		transform: skewX(-18deg);
+	}
+
+	&__title{
+		background: #fff;
+		border-radius: 0 6px 6px 0;
+		color: $orange;
+		padding: 0 10px 3px 30px;
+		float: left;
+		position: relative;
+		z-index: 2;
+	}
+
+	&__data{		
+		float: left;
+		background: $orange;
+		border-radius: 0 6px 6px 0;
+		padding-left: 20px;
+		margin-left: -20px;
+	}
+
+
+	&__text{
+		display: block;
+		padding: 17px;
+		transform: skewX(18deg);
+	}
+}
+
+
+
+/* ==========================================================================
+ * home
+ * ========================================================================== */
+
+.home{
+	background: #2d64b6 url(../images/bg/home.jpg) 50% 0 no-repeat;
+	background-size: cover;
+	color: #fff;
+	position: relative;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	&__counters{
+		position: absolute;
+		top: 100px;
+		left: 0;
+	}
+	
+	&__content{
+		text-align: center;		
+	}
+
+	&__logo-placeholder{
+		margin: 0 0 20px;
+	}
+
+	&__logo{
+		display: inline-block;
+		text-indent: -9999px;
+		@include sprite($storks);
+	}
+
+	&__title{
+		margin: 0 0 50px;
+		font-size: 23px;
+		text-transform: uppercase;
+	}
+
+	&__activities{
+		
+	}
+
+}
+
+.home-activities{
+
+	&__list{
+		
+	}
+
+	&__item{
+		display: inline-block;
+		vertical-align: top;
+		margin: 0 -10px 0;
+
+		&:nth-child(1),
+		&:nth-child(3){
+			margin-top: 60px;
+		}
+	}
+
+	&__button{
+		background: none;
+		width: 339px;
+		height: 339px;
+		border: 0;
+		text-indent: -9999px;
+
+		cursor: pointer;
+		transition: all .1s;
+
+		&:hover{
+			transform: scale(1.1);
+		}
+
+		&--1{
+			background: url(../images/activities/1.png) 50% 0 no-repeat;
+		}
+
+		&--2{
+			background: url(../images/activities/2.png) 50% 0 no-repeat;
+		}
+
+		&--3{
+			background: url(../images/activities/3.png) 50% 0 no-repeat;
+		}
+	}
+}
+
+/* ==========================================================================
+ * quiz
+ * ========================================================================== */
+
+.quiz{
+	background: #2d64b6 url(../images/bg/home.jpg) 50% 0 no-repeat;
+	background-size: cover;
+	color: #fff;
+
+	&:after{
+		content: url(../images/stork.png);
+		position: absolute;
+		bottom: -10px;
+		left: 50%;
+		margin: 0 0 0 200px;
+	}
+
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+
+	&__logo{
+		position: absolute;
+		top: 30px;
+		left: 30px;
+	}
+	
+	&__counters{
+		position: absolute;
+		top: 140px;
+		left: 0;
+	}
+
+	&__content{
+		
+	}
+
+	&__questions{
+		
+	}
+
+	&__item{
+		display: none;
+
+		&--visible{
+			display: block;
+		}
+	}
+}
+
+.quiz-item{
+	text-align: center;
+
+	&__number{
+		font-family: $sans;
+		font-weight: 300;
+		font-size: 18px;
+		margin: 0 0 20px;
+	}
+
+	&__title{
+		max-width: 460px;
+		font-size: 36px;
+		font-family: $sans;
+		font-weight: 300;
+		margin: 0 auto 60px;
+	}
+
+	&__answers{
+		
+	}
+
+	&__answer{
+		margin: 0 0 25px;
+
+		&:list-child{
+			margin-bottom: 0;
+		}
+	}
+
+	&__button{
+		background: none;
+		border: 0;
+		font-size: 36px;
+		font-family: $futuris;
+		color: #fff;
+		cursor: pointer;
+
+		outline: none;
+
+		&:hover{
+			text-shadow: 0 0 30px #fff;
+		}
+	}
+}
