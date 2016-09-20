@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { PromoOptions } from 'appSettings';
 
+import AppLogo from '../../components/common/AppLogo';
 import Button from '../../components/common/Button';
 
 import * as asyncActions from '../../actions/async';
@@ -144,7 +145,8 @@ class Quiz extends React.Component {
 	}
 
 	_goBackHandler = () => (e) => {
-		this.props.redirect('/');
+		e.preventDefault();
+		this.props.goTo('/kids');
 	}
 
 
@@ -198,11 +200,12 @@ class Quiz extends React.Component {
 		return(
 			<div className="app__page quiz">
 
-				<div className="quiz__logo storks-logo">
-					Аисты
-				</div>
+				<AppLogo 
+					mixClass="app__logo"
+					href="/kids"
+				/>
 
-				<div className="quiz__counters counters">
+				<div className="app__counters counters">
 
 					<ul className="counters__list">
 
@@ -303,6 +306,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	getResults: (data) => dispatch(asyncActions.getResults(data)),
 	redirect: (page) => dispatch(pageActions.setPageWithoutHistory(page)),
+	goTo: (page) => dispatch(pageActions.setPage(page)),
 });
 
 Quiz.propTypes = {

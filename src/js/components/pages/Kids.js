@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 //import * as asyncActions from '../../actions/async';
 import * as pageActions from '../../actions/page';
 
-class Home extends React.Component {
+class Kids extends React.Component {
 
 	_selectActivityHandler = (activity) => (e) => {
 		e.preventDefault();
@@ -17,9 +17,9 @@ class Home extends React.Component {
 	render(){
 		const { props } = this;
 		return(
-			<div className="app__page home">
+			<div className="app__page home-kids">
 
-				<div className="home__counters counters">
+				<div className="app__counters counters">
 
 					<ul className="counters__list">
 
@@ -67,26 +67,26 @@ class Home extends React.Component {
 
 				</div>
 
-				<div className="home__content">
+				<div className="home-kids__content">
 
-					<div className="home__logo-placeholder">
+					<div className="home-kids__logo-placeholder">
 
-						<span className="home__logo">Аисты</span>
+						<span className="home-kids__logo">Аисты</span>
 
 					</div>
 
-					<h1 className="home__title">
+					<h1 className="home-kids__title">
 						ЗАРАБАТЫВАЙ БАЛЛЫ И ПОЛУЧАЙ ПРИЗЫ
 					</h1>
 
-					<div className="home__activities home-activities">
+					<div className="home-kids__activities home-kids-activities">
 
-						<ul className="home-activities__list">
+						<ul className="home-kids-activities__list">
 
-							<li className="home-activities__item">
+							<li className="home-kids-activities__item">
 
 								<button 
-									className="home-activities__button home-activities__button--1"
+									className="home-kids-activities__button home-kids-activities__button--1"
 									onClick={this._selectActivityHandler('quiz')}
 								>
 									Тест на знание мультика
@@ -94,10 +94,10 @@ class Home extends React.Component {
 
 							</li>
 
-							<li className="home-activities__item">
+							<li className="home-kids-activities__item">
 
 								<button 
-									className="home-activities__button home-activities__button--2"
+									className="home-kids-activities__button home-kids-activities__button--2"
 									onClick={this._selectActivityHandler('game')}
 									
 								>
@@ -106,10 +106,10 @@ class Home extends React.Component {
 
 							</li>
 
-							<li className="home-activities__item">
+							<li className="home-kids-activities__item">
 
 								<button 
-									className="home-activities__button home-activities__button--3"
+									className="home-kids-activities__button home-kids-activities__button--3"
 									onClick={this._selectActivityHandler('stickers')}
 								>
 									Отправь стикер другу
@@ -138,7 +138,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	setPage: (page) => dispatch(pageActions.setPage(page)),
 });
 
-Home.propTypes = {
+Kids.propTypes = {
 	mixClass: React.PropTypes.string,
 //	Array: React.PropTypes.array.isRequired,
 //	Bool: React.PropTypes.bool.isRequired,
@@ -149,4 +149,4 @@ Home.propTypes = {
 //	Symbol: React.PropTypes.symbol.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Kids);

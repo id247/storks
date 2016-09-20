@@ -50,6 +50,16 @@
 		}
 	}
 
+	&--s{
+		border-radius: 6px;
+		font-weight: 700;
+		font-size: 18px;
+		padding: 8px 15px 8px;
+		text-transform: uppercase;
+		transform: skewX(-15deg);
+	}
+
+
 	&--m{
 		border-radius: 6px;
 		font-weight: 700;

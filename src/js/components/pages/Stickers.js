@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { PromoOptions } from 'appSettings';
 
+import AppLogo from '../../components/common/AppLogo';
 import Button from '../../components/common/Button';
 
 import * as asyncActions from '../../actions/async';
@@ -21,11 +22,12 @@ class Stickers extends React.Component {
 		return(
 			<div className="app__page stickers">
 
-				<div className="stickers__logo storks-logo">
-					Аисты
-				</div>
+				<AppLogo 
+					mixClass="app__logo"
+					href="/kids"
+				/>
 
-				<div className="stickers__counters counters">
+				<div className="app__counters counters">
 
 					<ul className="counters__list">
 

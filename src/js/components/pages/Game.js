@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { PromoOptions } from 'appSettings';
 
 import Button from '../../components/common/Button';
+import AppLogo from '../../components/common/AppLogo';
 
 import * as asyncActions from '../../actions/async';
 import * as pageActions from '../../actions/page';
@@ -153,7 +154,8 @@ class Game extends React.Component {
 	}
 
 	_goBackHandler = () => (e) => {
-		this.props.redirect('/');
+		e.preventDefault();
+		this.props.goTo('/kids');
 	}
 
 
@@ -165,11 +167,12 @@ class Game extends React.Component {
 		return(
 			<div className="app__page game">
 
-				<div className="game__logo storks-logo">
-					Аисты
-				</div>
+				<AppLogo 
+					mixClass="app__logo"
+					href="/kids"
+				/>
 
-				<div className="game__counters counters">
+				<div className="app__counters counters">
 
 					<ul className="counters__list">
 
@@ -339,6 +342,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	getResults: (data) => dispatch(asyncActions.getResults(data)),
 	redirect: (page) => dispatch(pageActions.setPageWithoutHistory(page)),
+	goTo: (page) => dispatch(pageActions.setPage(page)),
 });
 
 Game.propTypes = {

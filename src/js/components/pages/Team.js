@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import AppLogo from '../../components/common/AppLogo';
 import Button from '../../components/common/Button';
 
 import * as asyncActions from '../../actions/async';
@@ -18,11 +19,11 @@ class Team extends React.Component {
 	_selectTeam(team){
 		const { props } = this;
 		if (!props.profile){
-			props.login();
+			props.login('/' + team);
 			return;
 		}
 
-		props.redirect('/');
+		props.goTo('/' + team);
 	}
 
 	_selectTeamHandler = (team) => (e) => {
@@ -36,9 +37,10 @@ class Team extends React.Component {
 		return (
 			<div className="app__page team">
 
-				<div className="team__logo storks-logo">
-					Аисты
-				</div>
+				<AppLogo 
+					mixClass="app__logo"
+					href="/"
+				/>
 
 				<div className="team__content">
 
@@ -109,7 +111,7 @@ class Team extends React.Component {
 									size="m"
 									color="orange"
 									type="button"
-									onClickHandler={this._selectTeamHandler('children')}
+									onClickHandler={this._selectTeamHandler('kids')}
 								>
 									<span className="button__text">Дети</span>
 								</Button>
@@ -136,9 +138,10 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-	login: () => dispatch(asyncActions.login()),
+	login: (pageAfterLogin) => dispatch(asyncActions.login(pageAfterLogin)),
 	init: () => dispatch(asyncActions.init()),
 	redirect: (page) => dispatch(pageActions.setPageWithoutHistory(page)),
+	goTo: (page) => dispatch(pageActions.setPage(page)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Team);

@@ -76,6 +76,18 @@
 		z-index: 550;
 	}
 
+	&__logo{
+		position: absolute;
+		top: 30px;
+		left: 30px;
+	}
+	
+	&__counters{
+		position: absolute;
+		top: 140px;
+		left: 0;
+	}
+
 }
 
 /* ==========================================================================
@@ -134,9 +146,15 @@
  * ========================================================================== */
 
 .storks-logo{
-	display: inline-block;
-	text-indent: -9999px;
-	@include sprite($team-logo);
+	&__button{
+		background-color: transparent;
+		display: inline-block;
+		text-indent: -9999px;
+		@include sprite($team-logo);
+		cursor: pointer;
+		outline: none;
+		border: 0;
+	}
 }
 
 /* ==========================================================================
@@ -147,12 +165,6 @@
 	background-image: url(../images/bg/team.jpg);
 	text-align: center;
 	
-	&__logo{
-		position: absolute;
-		top: 30px;
-		left: 30px;
-	}
-
 	&__activities{
 		margin: 0 0 25px;
 	}
@@ -295,16 +307,11 @@
 
 
 /* ==========================================================================
- * home
+ * home-kids
  * ========================================================================== */
 
-.home{
+.home-kids{
 	
-	&__counters{
-		position: absolute;
-		top: 100px;
-		left: 0;
-	}
 	
 	&__content{
 		text-align: center;		
@@ -332,7 +339,7 @@
 
 }
 
-.home-activities{
+.home-kids-activities{
 
 	&__list{
 		
@@ -380,6 +387,38 @@
 }
 
 /* ==========================================================================
+ * home-parents
+ * ========================================================================== */
+
+.home-parents{
+
+	background-attachment: fixed;
+
+	&__content{
+		
+	}
+
+	&__title{
+		text-align: center;
+		font-size: 30px;
+		margin: 0 0 10px;
+		color: $orange;
+		text-transform: uppercase;
+	}
+
+	&__text{
+		text-align: center;
+		margin: 0 0 20px;
+	}
+
+	&__comments{
+		max-width: 900px;
+		margin: auto;
+	}
+
+}
+
+/* ==========================================================================
  * quiz
  * ========================================================================== */
 
@@ -391,19 +430,6 @@
 		bottom: -10px;
 		left: 50%;
 		margin: 0 0 0 200px;
-	}
-
-
-	&__logo{
-		position: absolute;
-		top: 30px;
-		left: 30px;
-	}
-	
-	&__counters{
-		position: absolute;
-		top: 140px;
-		left: 0;
 	}
 
 	&__content{
@@ -496,19 +522,6 @@
 
 .game{
 
-
-	&__logo{
-		position: absolute;
-		top: 30px;
-		left: 30px;
-	}
-	
-	&__counters{
-		position: absolute;
-		top: 140px;
-		left: 0;
-	}
-
 	&__content{
 		
 	}
@@ -584,17 +597,6 @@
  * ========================================================================== */
 
 .stickers{
-	&__logo{
-		position: absolute;
-		top: 30px;
-		left: 30px;
-	}
-	
-	&__counters{
-		position: absolute;
-		top: 140px;
-		left: 0;
-	}
 
 	&__title{
 		font-size: 26px;
