@@ -1,52 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import AppLogo from '../../components/common/AppLogo';
-
-import Comments from '../../components/comments/Comments';
-
 //import * as asyncActions from '../../actions/async';
 //import * as pageActions from '../../actions/page';
 
 class Parents extends React.Component {
 
-	_selectActivityHandler = (activity) => (e) => {
-		e.preventDefault();
-
-		this.props.setPage('/' + activity);
-	}
-
 	render(){
 		const { props } = this;
 
-		//if (props.profile.users)
+		if (!props.profile){
+			console.log('no profile');
+			return null;
+		}
 
-		return(
-			<div className="app__page home-parents">
-
-				<AppLogo 
-					mixClass="app__logo"
-					href="/"
-				/>
-
-				<div className="home-parents__content">
-
-					<h1 className="home-parents__title">
-						Расскажите свою историю
-					</h1>
-
-					<div className="home-parents__text text">
-						<p>
-							Вспомните интересные истории о том, как вы боролись с «почемучками» и рассказывали своим детям о взрослой жизни
-						</p>
-					</div>
-
-					<Comments mixClass="home-parents__comments" />
-
-				</div>
-
-			</div>
-		);
+		console.log('profile');
+		return props.children;
 	}
 }
 
@@ -57,6 +26,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+	redirect: (page) => dispatch(pageActions.setPageWithoutHistory(page)),
 });
 
 Parents.propTypes = {

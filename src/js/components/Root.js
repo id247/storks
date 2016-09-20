@@ -8,21 +8,36 @@ import ErrorMessage from '../components/error/ErrorMessage';
 import App 			from '../components/App';
 
 import Team 		from '../components/pages/Team';
+
+import Parents 			from '../components/pages/Parents';
+import ParentsHistories from '../components/pages/parents/Histories';
+import ParentsOnly 		from '../components/pages/parents/Only';
+
 import Kids 		from '../components/pages/Kids';
-import Parents 		from '../components/pages/Parents';
-import Quiz 		from '../components/pages/Quiz';
-import Game 		from '../components/pages/Game';
-import Stickers 	from '../components/pages/Stickers';
+import KidsIndex 	from '../components/pages/kids/Kids';
+import Quiz 		from '../components/pages/kids/Quiz';
+import Game 		from '../components/pages/kids/Game';
+import Stickers 	from '../components/pages/kids/Stickers';
+import KidsOnly 	from '../components/pages/kids/Only';
 
 const routes = (
 	<Router history={hashHistory}>
 		<Route path="/" component={App}>
 			<IndexRoute component={Team} />
-			<Route path="kids" component={Kids} />
-			<Route path="parents" component={Parents} />
-			<Route path="quiz" component={Quiz} />
-			<Route path="game" component={Game} />
-			<Route path="stickers" component={Stickers} />
+			
+			<Route path="parents" component={Parents}>
+				<IndexRoute component={ParentsHistories} />
+				<Route path="only" component={ParentsOnly} />
+			</Route>
+
+			<Route path="kids" component={Kids}>
+				<IndexRoute component={KidsIndex} />
+				<Route path="quiz" component={Quiz} />
+				<Route path="game" component={Game} />
+				<Route path="stickers" component={Stickers} />
+				<Route path="only" component={KidsOnly} />
+			</Route>
+
 		</Route>		
 	</Router>
 );

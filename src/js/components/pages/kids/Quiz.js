@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 
 import { PromoOptions } from 'appSettings';
 
-import AppLogo from '../../components/common/AppLogo';
-import Button from '../../components/common/Button';
+import AppLogo from '../../../components/common/AppLogo';
+import Button from '../../../components/common/Button';
 
-import * as asyncActions from '../../actions/async';
-import * as pageActions from '../../actions/page';
+import * as asyncActions from '../../../actions/async';
+import * as pageActions from '../../../actions/page';
 
 
 const questions = [

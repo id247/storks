@@ -6,7 +6,8 @@
 .container{
 	overflow: hidden;
 	position: relative;
-
+	background: #2d64b6;
+	min-height: 100vh;
 
 }
 
@@ -43,6 +44,8 @@
  * ========================================================================== */
 
 .app{
+
+	background: #2d64b6;
 
 	&__page{
 		min-height: 100vh;
@@ -86,6 +89,16 @@
 		position: absolute;
 		top: 140px;
 		left: 0;
+	}
+
+	&__content{
+		text-align: center;
+	}
+
+	&__title{
+		font-size: 30px;
+		margin: 0 0 20px;
+		text-transform: uppercase;
 	}
 
 }

@@ -71,7 +71,7 @@ export function login(pageAfterLogin = '/') {
 		.then( () => {
 			dispatch(loadingActions.loadingHide());	
 
-			dispatch(pageActions.setPageWithoutHistory(pageAfterLogin));
+			dispatch(getInitialData(pageAfterLogin));
 		},(err) => {
 			dispatch(loadingActions.loadingHide());	
 
@@ -425,7 +425,7 @@ export function commentsFormSubmit() {
 
 //init
 
-export function getInitialData() {
+export function getInitialData(pageAfterLogin = '/') {
 
 	return dispatch => {
 		dispatch(loadingActions.loadingShow());	
@@ -435,7 +435,7 @@ export function getInitialData() {
 			dispatch(loadingActions.loadingHide());
 
 			dispatch(userActions.userSet(user));
-			//dispatch(pageActions.setPageWithoutHistory('/'));
+			dispatch(pageActions.setPageWithoutHistory(pageAfterLogin));
 		})
 		.catch( err => { 
 			dispatch(loadingActions.loadingHide());
