@@ -12,12 +12,7 @@ class App extends React.Component {
 
 	render(){
 		const { props } = this;
-
-		if (!props.profile){
-			console.log('no profile');
-			return null;
-		}
-		
+	
 		return props.children;
 	}
 }

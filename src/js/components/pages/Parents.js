@@ -2,19 +2,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 //import * as asyncActions from '../../actions/async';
-//import * as pageActions from '../../actions/page';
+import * as pageActions from '../../actions/page';
 
 class Parents extends React.Component {
+
+	componentWillMount(){
+		const { props } = this;
+
+		if (props.profile && props.profile.roles.indexOf('EduParent') === -1){
+			props.redirect('/parents/only');
+		}
+
+	}
 
 	render(){
 		const { props } = this;
 
 		if (!props.profile){
-			console.log('no profile');
 			return null;
 		}
 
-		console.log('profile');
 		return props.children;
 	}
 }

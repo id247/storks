@@ -66,8 +66,8 @@ class Comment extends React.Component {
 							(	
 								value.user.id !== 0 
 								&& 
-								CommentsOptions.adminId.indexOf(props.profile.id_str) > -1 
-								&&
+								//CommentsOptions.adminId.indexOf(props.profile.id_str) > -1 
+								//&&
 								value.user.id === props.profile.id_str
 							);
 

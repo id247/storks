@@ -16,7 +16,7 @@ const CommentLikes = (props) => {
 
 				<span className="likes__lext">{props.text}</span>
 				{' '}
-				<span className="likes__count">{value}</span>
+				<span className="likes__count">{value > 0 ? value : ''}</span>
 
 			</button>
 

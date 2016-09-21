@@ -9,16 +9,18 @@ class Kids extends React.Component {
 	componentWillMount(){
 		const { props } = this;
 
-		if (props.profile.roles.indexOf('EduStudent') === -1){
+		if (props.profile && props.profile.roles.indexOf('EduStudent') === -1){
 			props.redirect('/kids/only');
-
-			return false;
 		}
 
 	}
 
 	render(){
 		const { props } = this;
+		
+		if (!props.profile){
+			return null;
+		}
 
 		return props.children;
 	}

@@ -77,7 +77,7 @@ class CommentMessageEditor extends React.Component {
 				
 					<textarea 
 						className="comment-editor__textarea" 
-						name="newMessage" cols="30" rows="10" 
+						name="newMessage" cols="30" rows="5" 
 						defaultValue={value.message} 
 					/>
 
@@ -109,20 +109,20 @@ class CommentMessageEditor extends React.Component {
 					<Button 
 						type="button" 
 						mixClass="comment-editor__button" 
-						color="blue-light"
+						color="orange"
 						size="s"
 						onClickHandler={this._cancelHandler()}
 					>
-						Отмена
+						<span className="button__text">Отмена</span>
 					</Button>
 
 					<Button 
 						type="submit" 
 						mixClass="comment-editor__button" 
-						color="blue-light"
+						color="orange"
 						size="s"
 					>
-						Сохранить
+						<span className="button__text">Сохранить</span>
 					</Button>
 										
 				</div>

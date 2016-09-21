@@ -13,9 +13,6 @@ class Histories extends React.Component {
 	componentWillMount(){
 		const { props } = this;
 
-		if (props.profile.roles.indexOf('EduParent') === -1){
-			props.redirect('/parents/only');
-		}
 
 	}
 
@@ -31,26 +28,26 @@ class Histories extends React.Component {
 		//if (props.profile.users)
 
 		return(
-			<div className="app__page home-parents">
+			<div className="app__page parents-history">
 
 				<AppLogo 
 					mixClass="app__logo"
 					href="/"
 				/>
 
-				<div className="home-parents__content">
+				<div className="parents-history__content">
 
-					<h1 className="home-parents__title">
+					<h1 className="parents-history__title">
 						Расскажите свою историю
 					</h1>
 
-					<div className="home-parents__text text">
+					<div className="parents-history__text text">
 						<p>
-							Вспомните интересные истории о том, как вы боролись с «почемучками» и рассказывали своим детям о взрослой жизни
+							Вспомните интересные истории о том, как вы боролись с&nbsp;«почемучками» и рассказывали своим детям о взрослой жизни
 						</p>
 					</div>
 
-					<Comments mixClass="home-parents__comments" />
+					<Comments mixClass="parents-history__comments" />
 
 				</div>
 

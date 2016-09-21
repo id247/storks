@@ -9,6 +9,25 @@
 	background: #2d64b6;
 	min-height: 100vh;
 
+	&__copy,
+	&__age{
+		text-indent: -9999px;
+		position: absolute;
+		z-index: 200;
+	}
+
+	&__copy{
+		bottom: 15px;
+		left: 15px;
+		@include sprite($copy);
+	}
+
+	&__age{
+		top: 5px;
+		right: 5px;
+		@include sprite($age);
+	}
+
 }
 
 /* ==========================================================================
@@ -101,6 +120,63 @@
 		text-transform: uppercase;
 	}
 
+	&__modal{
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;  
+		z-index: 500;
+	}
+
+}
+
+/* ==========================================================================
+ * modal
+ * ========================================================================== */
+
+.modal{
+	background: rgba(0,0,0,.5);
+
+	text-align: center;
+	padding: 5%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	opacity: 0;
+	visibility: hidden;
+
+	&--visible{
+		opacity: 1;
+		visibility: visible;
+	}
+	
+	&__content{
+		background: #fff;
+		color: $text;
+		padding: 30px;
+		border-radius: 15px;
+	}
+
+	&__title{
+		color: $orange;
+		font-size: 36px;
+		margin: 0 0 20px;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	&__video-placeholder{
+		
+		margin: 0 0 20px;
+
+	}
+
+	&__button{
+		width: 300px;
+	}
 }
 
 /* ==========================================================================
@@ -429,6 +505,34 @@
 		margin: auto;
 	}
 
+}
+
+/* ==========================================================================
+ * parents-history
+ * ========================================================================== */
+
+.parents-history{
+
+	&__content{
+		max-width: 750px;
+		margin: 0 auto;
+	}
+	
+	&__title{
+		color: $orange;
+		font-size: 30px;
+		margin: 0 0 20px;
+		text-transform: uppercase;
+		text-align: center;
+	}
+
+	&__text{
+		text-align: center;
+		margin: 0 0 20px;
+		font-size: 24px;
+		font-weight: 300;
+		font-family: $sans;
+	}
 }
 
 /* ==========================================================================

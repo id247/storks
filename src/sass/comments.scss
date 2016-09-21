@@ -111,6 +111,7 @@ $comments-blue: #134987;
 
 .comments{
 	position: relative;
+	color: $text;
 
 	&__form{
 		margin: 0 0 20px;
@@ -154,7 +155,7 @@ $comments-blue: #134987;
 	}
 
 	&__title{
-		font-size: 30px;
+		font-size: 20px;
 		margin: 0 0 30px;
 		color: $comments-blue;
 
@@ -165,22 +166,37 @@ $comments-blue: #134987;
 
 	&__textarea-placeholder{
 		margin: 0 0 35px;
+		position: relative;
+	}
+
+	&__placeholder{
+		position: absolute;
+		top: 15px;
+		left: 15px;
+		font-family: $sans;
+		font-size: 18px;
+		line-height: (24/18);
 	}
 
 	&__textarea{
 		width: 100%;
-		border: 1px solid #fff;
 		padding: 15px;
-		font-size: 14px;
 		font-family: $sans;
 		background: #f1f1f1;
 		border: 1px solid #cdcdcd;
 		font-size: 18px;
+		line-height: (24/18);
 		//height: 140px;
 		//border-radius: 5px;
 		//
 		&.error{
 			border-color: #ffa8a8;
+		}
+	}
+
+	&__textarea{
+		&:focus + .comments-form__placeholder{
+			display: none;
 		}
 	}
 
@@ -385,7 +401,7 @@ $comments-blue: #134987;
 
 	&__text{
 		color: $comments-text;
-		font-size: 22px;
+		font-size: 16px;
 		font-weight: 300;
 		margin: 0 0 15px;
 		&:last-child{
@@ -452,7 +468,7 @@ $comments-blue: #134987;
 .comment-editor{
 
 	&__row{
-		margin: 0 0 15px;
+		margin: 0 0 20px;
 	}
 
 	&__title{
@@ -464,7 +480,7 @@ $comments-blue: #134987;
 		border: 1px solid #ddd;
 		padding: 15px;
 		font-size: 14px;
-		margin: 0 0 20px;
+		//margin: 0 0 20px;
 	}
 
 	&__buttons{

@@ -40,6 +40,7 @@ class Quiz extends React.Component {
 			time: 0,
 			showResults: false,
 			currentQuestion: 1,
+			modalVisible: true,
 		};
 
 	}
@@ -58,7 +59,7 @@ class Quiz extends React.Component {
 	}
 
 	componentDidMount(){
-		this._startTimer();
+		//this._startTimer();
 	}
 
 	_startTimer(){
@@ -67,6 +68,7 @@ class Quiz extends React.Component {
 			...this.state,
 			...{
 				startTime: new Date().getTime(),
+				modalVisible: false,
 			}
 		});
 
@@ -147,6 +149,12 @@ class Quiz extends React.Component {
 	_goBackHandler = () => (e) => {
 		e.preventDefault();
 		this.props.goTo('/kids');
+	}
+
+	_startQuizHandler = () => (e) => {
+		e.preventDefault();
+
+		this._startTimer();
 	}
 
 
@@ -288,6 +296,47 @@ class Quiz extends React.Component {
 						</div>
 						)
 					}
+
+				</div>
+
+
+				<div className={('app__modal modal ' + (state.modalVisible ? 'modal--visible' : '') )}>
+
+					<div className="modal__content">
+
+						<div className="modal__title">
+
+							Посмотри Трейлер и ответь<br/>
+							на вопросы
+
+						</div>
+
+						<div className="modal__video-placeholder">
+
+							<iframe 
+								width="640" 
+								height="380" 
+								src="https://www.youtube.com/embed/kwBJW0HIHZw" 
+								allowFullScreen>
+							</iframe>
+
+						</div>
+
+						<div className="modal__button-placeholder">						
+
+							<Button
+								mixClass="modal__button"
+								size="m"
+								color="orange"
+								type="button"
+								onClickHandler={this._startQuizHandler()}
+							>
+								<span className="button__text">Начать</span>
+							</Button>
+
+						</div>	
+
+					</div>
 
 				</div>
 

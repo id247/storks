@@ -85,6 +85,16 @@ class Form extends React.Component {
 						onChange={this._messageChangeHandler()}
 					/>
 
+					<div className="comments-form__placeholder"
+						style={{
+							display: props.commentsForm.message.length > 0 ? 'none' : '',
+						}}
+					>
+						Например: <br/>
+						— Мам, ты меня откуда скачала? <br/>
+						— Я тебя родила, сынок!!
+					</div>
+
 				</div>
 
 				<FormPostAdded 

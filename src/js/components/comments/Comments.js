@@ -35,14 +35,16 @@ class Comments extends React.Component {
 	_setLabel(){
 		const { props } = this;
 
-		let host = document.location.host;
-		let pathname = document.location.pathname;
+		// let host = document.location.host;
+		// let pathname = document.location.pathname;
 
-		if (pathname[pathname.length - 1] === '/'){
-			pathname = pathname.slice(0, -1);
-		}
+		// if (pathname[pathname.length - 1] === '/'){
+		// 	pathname = pathname.slice(0, -1);
+		// }
 
-		const label = (host + pathname);
+		// const label = (host + pathname);
+		// 
+		const label = 'storksHistories';
 		
 		props.setCommentsLabel(label);
 	}
