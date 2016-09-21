@@ -24,8 +24,10 @@ class Histories extends React.Component {
 
 	render(){
 		const { props } = this;
-
-		//if (props.profile.users)
+		
+		if (!props.profile || props.profile.roles.indexOf('EduParent') === -1){
+			return null;
+		}
 
 		return(
 			<div className="app__page parents-history">

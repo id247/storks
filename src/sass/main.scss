@@ -12,7 +12,7 @@
 	&__copy,
 	&__age{
 		text-indent: -9999px;
-		position: absolute;
+		position: fixed;
 		z-index: 200;
 	}
 
@@ -68,7 +68,7 @@
 
 	&__page{
 		min-height: 100vh;
-		padding: 5% 10px;
+		padding: 20px 10px;
 
 		background: #2d64b6 url(../images/bg/home.jpg) 50% 0 no-repeat;
 		background-size: cover;
@@ -99,13 +99,13 @@
 	}
 
 	&__logo{
-		position: absolute;
+		position: fixed;
 		top: 30px;
-		left: 30px;
+		left: 10px;
 	}
 	
 	&__counters{
-		position: absolute;
+		position: fixed;
 		top: 140px;
 		left: 0;
 	}
@@ -336,7 +336,7 @@
 	}
 
 	&__button{
-		width: 295px;
+		min-width: 295px;
 	}
 }
 
@@ -401,6 +401,9 @@
 
 .home-kids{
 	
+	&__counters{
+		top: 50px;
+	}
 	
 	&__content{
 		text-align: center;		
@@ -475,43 +478,14 @@
 	}
 }
 
-/* ==========================================================================
- * home-parents
- * ========================================================================== */
-
-.home-parents{
-
-	background-attachment: fixed;
-
-	&__content{
-		
-	}
-
-	&__title{
-		text-align: center;
-		font-size: 30px;
-		margin: 0 0 10px;
-		color: $orange;
-		text-transform: uppercase;
-	}
-
-	&__text{
-		text-align: center;
-		margin: 0 0 20px;
-	}
-
-	&__comments{
-		max-width: 900px;
-		margin: auto;
-	}
-
-}
 
 /* ==========================================================================
  * parents-history
  * ========================================================================== */
 
 .parents-history{
+
+	background-attachment: fixed;
 
 	&__content{
 		max-width: 750px;
@@ -540,16 +514,49 @@
  * ========================================================================== */
 
 .quiz{
+	padding-top: 0;
+	display: block;
 
 	&:after{
-		content: url(../images/stork.png);
-		position: absolute;
-		bottom: -10px;
-		left: 50%;
-		margin: 0 0 0 200px;
+		// content: url(../images/stork.png);
+		// position: absolute;
+		// bottom: -10px;
+		// left: 50%;
+		// margin: 0 0 0 200px;
 	}
 
 	&__content{
+		background: url(../images/stork-2.png) 35% 0 no-repeat;
+		padding: 164px 0 0; 
+	}
+
+	&__frame{
+		width: 770px;
+		margin: 0 auto;
+		background: #00adce;
+		padding: 11px;
+		border-radius: 4px;
+
+		box-shadow: 0 5px 10px rgba(0,0,0,.2), 
+					inset 0 0 15px rgba(255,255,255,.9);
+	}
+
+	&__frame-inner{
+		min-height: 480px;
+		background: #15527c;	
+		background: linear-gradient(to bottom, #15527c 0%, #114264 100%);
+		
+		box-shadow: 0 0 15px rgba(255,255,255,.9),
+					inset 0 0 15px rgba(0,0,0,.5);
+
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+	}
+
+	&__frame-content{
 		
 	}
 
@@ -577,15 +584,15 @@
 	}
 
 	&__title{
-		max-width: 460px;
-		font-size: 36px;
+		//max-width: 460px;
+		font-size: 32px;
 		font-family: $sans;
 		font-weight: 300;
-		margin: 0 auto 60px;
+		margin: 0 auto 30px;
 	}
 
 	&__answers{
-		
+		margin: 0 0 -25px;
 	}
 
 	&__answer{
@@ -594,12 +601,18 @@
 		&:list-child{
 			margin-bottom: 0;
 		}
+
+		&--multi{
+			display: inline-block;
+			width: 35%;
+			text-align: left;
+		}
 	}
 
-	&__button{
+	&__answer-button{
 		background: none;
 		border: 0;
-		font-size: 36px;
+		font-size: 25px;
 		font-family: $futuris;
 		color: #fff;
 		cursor: pointer;
@@ -608,6 +621,10 @@
 		&:hover{
 			text-shadow: 0 0 30px #fff;
 		}
+	}
+
+	&__button-placeholder{
+		padding: 20px 0 0;
 	}
 }
 
@@ -633,11 +650,41 @@
 		
 	}
 }
+
+.quiz-checkbox{
+	display: inline-block;
+	position: relative;
+	cursor: pointer; 
+
+	&__input{
+		position: absolute;
+		left: -9999px;
+
+		&:checked + .quiz-checkbox__text:before{
+			@include sprite($quiz-check-checked);
+		}
+	}
+
+	&__text{
+		&:before{
+			content: '';
+			display: inline-block;
+			vertical-align: middle;
+			@include sprite($quiz-check);
+			margin: -2px 10px 0 0;
+		}
+		font-size: 25px;
+	}
+}
 /* ==========================================================================
  * game
  * ========================================================================== */
 
-.game{
+.game{	
+	
+	background-image: url(../images/bg/game.jpg);
+	background-attachment: fixed;
+	padding-top: 150px;
 
 	&__content{
 		
@@ -656,6 +703,11 @@
 		font-size: 36px;
 	}
 
+	&__counter{
+		margin: 0 0 30px;
+		font-size: 18px;
+	}
+
 	&__list{
 		margin: 0 0 -20px;
 	}
@@ -665,15 +717,28 @@
 		margin: 0 10px 20px;
 	}	
 
+	&__image{
+		
+	}
+
 }	
 
 .game-image{
 	position: relative;
+	overflow: hidden;
+	border-radius: 10px;
+	cursor: pointer;
+	
+	&__image{
+		display: block;
+		width: 100%;
+		height: auto;
+	}
 
 	&__button{
 		border: 0;
 		background: none;
-		background: rgba(255,255,255,.5);
+		//background: rgba(255,255,255,.5);
 		min-width: 20px;
 		min-height: 20px;
 		display: block;
@@ -681,6 +746,26 @@
 		position: absolute;
 
 		outline: none;
+		cursor: pointer;
+	}
+
+	&__svg{
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		cursor: pointer;
+
+		path{
+			fill: transparent;
+			cursor: pointer;
+			//fill: rgba(0,0,0,.5);
+		}
+
+		path:hover{
+			fill: transparent;
+		}
 	}
 
 }
@@ -719,12 +804,13 @@
 		font-size: 26px;
 		margin: 0 0 40px;
 		text-align: center;
+		color: $orange;
 	}
 
 	&__list{
 		text-align: center;
 		max-width: 1000px;
-		margin: 0 0 50px;
+		margin: 0 0 0px;
 	}
 
 	&__item{
@@ -735,6 +821,11 @@
 	&__button-placeholder{
 		text-align: center;
 	}
+	
+	&__people{
+		margin: 0 0 30px;
+	}
+
 }
 
 .stickers-item{
@@ -769,5 +860,63 @@
 	&__image{
 		width: 100%;
 		height: 100%;
+	}
+}
+
+
+/* ==========================================================================
+ * people
+ * ========================================================================== */
+
+.people{
+
+	&__list{
+		width: 500px;
+		margin: auto;
+	}
+
+	&__item{
+		@include clearfix;
+		margin: 0 0 25px;
+		&:last-child{
+			margin-bottom: 0;
+		}
+	}
+
+	&__profile{
+		float: left;
+	}
+
+	&__avatar-placeholder{
+		display: inline-block;
+		vertical-align: middle;
+		overflow: hidden;
+		border-radius: 50%;
+		width: 30px;
+		height: 30px;
+		margin: 0 10px 0 0;
+	}
+
+	&__avatar{
+		width: 100%;
+		height: auto;
+	}
+
+	&__name{
+		font-size: 24px;
+		text-transform: uppercase;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	&__data{
+		float: right;
+	}
+
+	&__send{
+		display: inline-block;
+		font-size: 18px;
+		padding: 5px;
+		text-transform: uppercase;
 	}
 }

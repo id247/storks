@@ -176,6 +176,7 @@ $comments-blue: #134987;
 		font-family: $sans;
 		font-size: 18px;
 		line-height: (24/18);
+		pointer-events: none;
 	}
 
 	&__textarea{

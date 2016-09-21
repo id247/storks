@@ -19,7 +19,7 @@ class Kids extends React.Component {
 		return(
 			<div className="app__page home-kids">
 
-				<div className="app__counters counters">
+				<div className="app__counters home-kids__counters counters">
 
 					<ul className="counters__list">
 

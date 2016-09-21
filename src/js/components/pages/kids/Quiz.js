@@ -14,20 +14,112 @@ const questions = [
 	{
 		title: 'Как зовут лучшего аиста в курьерской службе?',
 		answers: [
-			'Джуниор',
-			'Джери',
-			'Джаред',
+			{
+				title: 'Джуниор',
+				points: 5,
+			},
+			{
+				title: 'Джери',
+				points: 0,
+			},
+			{
+				title: 'Джаред',
+				points: 0,
+			},
 		],
-		correct: 'Джуниор',
+		multi: false,
 	},
 	{
-		title: 'Кто проработал в офисе все выходные?',
+		title: 'Как зовут его подругу?',
 		answers: [
-			'Санька',
-			'Савятка',
-			'Другой Санька, который плохой',
+			{
+				title: 'Лютик',
+				points: 5,
+			},
+			{
+				title: 'Цветик',
+				points: 0,
+			},
+			{
+				title: 'Василек',
+				points: 0,
+			},
 		],
-		correct: 'Санька',
+		multi: false,
+	},
+	{
+		title: 'Раньше аисты доставляли детей. По сюжету мультфильма они поменяли квалификацию и теперь доставляют именно это. Что?',
+		answers: [
+			{
+				title: 'Счастье',
+				points: 0,
+			},
+			{
+				title: 'Цветы',
+				points: 0,
+			},
+			{
+				title: 'Посылки',
+				points: 5,
+			},
+		],
+		multi: false,
+	},
+	{
+		title: 'Мальчик в трейлере просит своих родителей перенести дымоход в другое место. Для чего?',
+		answers: [
+			{
+				title: 'Чтобы удобнее было сидеть на крыше',
+				points: 0,
+			},
+			{
+				title: 'Чтобы аист принес ему братика',
+				points: 5,
+			},
+			{
+				title: 'Чтобы Санта-Клаусу было проще попасть в дом на Рождество',
+				points: 0,
+			},
+		],
+		multi: false,
+	},
+	{
+		title: 'Отметь животных, которых ты увидел в трейлере! Ответов здесь несколько, и ты можешь заработать баллы за каждый верный ответ.',
+		answers: [
+			{
+				title: 'Волк',
+				points: 3,
+			},
+			{
+				title: 'Белый медведь',
+				points: 3,
+			},
+			{
+				title: 'Обезьяна',
+				points: 3,
+			},
+			{
+				title: 'Кошка',
+				points: 0,
+			},
+			{
+				title: 'Пингвин',
+				points: 5,
+			},
+			{
+				title: 'Заяц',
+				points: 0,
+			},
+			{
+				title: 'Аист',
+				points: 0,
+			},
+			{
+				title: 'Попугай',
+				points: 0,
+			},
+		],
+		multi: true,
 	},
 ];
 
@@ -36,6 +128,7 @@ class Quiz extends React.Component {
 		super(props);
 		this.state = {
 			correctAnswers: 0,
+			points: 0,
 			startTime: 0,
 			time: 0,
 			showResults: false,
@@ -120,25 +213,41 @@ class Quiz extends React.Component {
 		}
 	}
 
-	_correctAnswer(){
+	_addAnswerPoints(points){
 
 		this.setState({
 			...this.state,
 			...{
 				correctAnswers: this.state.correctAnswers + 1,
+				points: this.state.points + points,
 			}
 		});
 
 		console.log(this.state);
 	}
 
-	_selectAnswerHandler = (questionIndex, answer) => (e) => {
+	_selectAnswerHandler = (questionIndex, points) => (e) => {
 		e.preventDefault();
 
-		if (questions[questionIndex - 1].correct === answer){
-			console.log('correct');
-			this._correctAnswer();
-		}
+		this._addAnswerPoints(points);
+
+		setTimeout(() => { //hack for update state twice
+		 	this._nextQuestion();
+		}, 0);
+
+	}
+	_selectMultiAnswerHandler = (questionIndex) => (e) => {
+		e.preventDefault();
+
+		const checkedAnswers = this.refs.answers.querySelectorAll('.quiz-checkbox__input:checked');
+
+		const points = [...checkedAnswers].reduce( (prev, answer) => {
+			return prev + parseInt(answer.value);
+		}, 0);
+		// if (questions[questionIndex - 1].correct === answer){
+		// 	console.log('correct');
+		this._addAnswerPoints(points);
+		// }
 
 		setTimeout(() => { //hack for update state twice
 		 	this._nextQuestion();
@@ -179,22 +288,73 @@ class Quiz extends React.Component {
 						{question.title}
 					</h3>
 
-					<ul className="quiz-item__answers">
+					<ul className="quiz-item__answers" ref="answers">
 
-						{question.answers.map( (answer, i) => (
+						{question.answers.map( (answer, i) => {
+
+							if (question.multi){
+
+								return (
+								<li className="quiz-item__answer quiz-item__answer--multi" key={questionIndex + i}>
+
+									<label className="quiz-checkbox">
+										<input 
+											type="checkbox"
+											className="quiz-checkbox__input"
+											name="last[]"
+											
+											value={answer.points}
+											//onChange={this._selectAnswerHandler(questionIndex, answer.points)}
+										/>
+										<span className="quiz-checkbox__text">
+											{answer.title}
+										</span>
+									</label>
+
+								</li>
+								);
+							}
+
+							return (
 							<li className="quiz-item__answer" key={questionIndex + i}>
 
 								<button
-									className="quiz-item__button"
-									onClick={this._selectAnswerHandler(questionIndex, answer)}
+									className="quiz-item__answer-button"
+									onClick={this._selectAnswerHandler(questionIndex, answer.points)}
 								>
-									{answer}
+									{answer.title}
 								</button>
 
 							</li>
-						))}
+							);
+
+						})}
 
 					</ul>
+
+					{
+						!question.multi
+						? null
+						:
+						(
+
+						<div className="quiz-item__button-placeholder">						
+
+							<Button
+								mixClass="quiz-item__button"
+								size="m"
+								color="orange"
+								type="button"
+								onClickHandler={this._selectMultiAnswerHandler()}
+							>
+								<span className="button__text">Отправить</span>
+							</Button>
+
+						</div>	
+
+						)
+
+					}
 
 			</div>
 		);
@@ -243,59 +403,77 @@ class Quiz extends React.Component {
 
 				<div className="quiz__content">
 
-					{
-						state.showResults
-						?
-						(
-							<div className="quiz__results quiz-results">
+					<div className="quiz__frame">
 
-								<div className="quiz-results__title">
-									Результаты:
+						<div className="quiz__frame-inner">
+
+							<div className="quiz__frame-content">
+
+							{
+								state.showResults
+								?
+								(
+									<div className="quiz__results quiz-results">
+
+										<div className="quiz-results__title">
+											Результаты:
+										</div>
+
+										<ul className="quiz-results__list">
+
+											<li className="quiz-results__item">
+
+												Правильных ответов: {state.correctAnswers}
+
+											</li>
+
+											<li className="quiz-results__item">
+
+												Получено очков: {state.points}
+
+											</li>
+
+											<li className="quiz-results__item">
+
+												Время: {this._getTime(state.time)}
+
+											</li>
+
+										</ul>	
+
+										<div className="quiz-results__button-placeholder">						
+
+											<Button
+												mixClass="quiz-results__button"
+												size="m"
+												color="orange"
+												type="button"
+												onClickHandler={this._goBackHandler()}
+											>
+												<span className="button__text">Назад к активностям</span>
+											</Button>
+
+										</div>	
+
+									</div>
+								)
+								:
+								(
+								<div className="quiz__questions">
+
+									{questions.map( (question, index) => (
+										this._question(index + 1, question)
+									))}
+
 								</div>
-
-								<ul className="quiz-results__list">
-
-									<li className="quiz-results__item">
-
-										Правильных ответов: {state.correctAnswers}
-
-									</li>
-
-									<li className="quiz-results__item">
-
-										Время: {this._getTime(state.time)}
-
-									</li>
-
-								</ul>	
-
-								<div className="quiz-results__button-placeholder">						
-
-									<Button
-										mixClass="quiz-results__button"
-										size="m"
-										color="orange"
-										type="button"
-										onClickHandler={this._goBackHandler()}
-									>
-										<span className="button__text">Назад к активностям</span>
-									</Button>
-
-								</div>	
+								)
+							}
 
 							</div>
-						)
-						:
-						(
-						<div className="quiz__questions">
-
-							{questions.map( (question, index) => (
-								this._question(index + 1, question)
-							))}
-
+						
 						</div>
-						)
-					}
+					
+					</div>
 
 				</div>
 
@@ -315,8 +493,8 @@ class Quiz extends React.Component {
 
 							<iframe 
 								width="640" 
-								height="380" 
-								src="https://www.youtube.com/embed/kwBJW0HIHZw" 
+								height="360" 
+								src={state.modalVisible ? 'https://www.youtube.com/embed/c5D1VdncWNw' : 'about:blank'} 
 								allowFullScreen>
 							</iframe>
 
