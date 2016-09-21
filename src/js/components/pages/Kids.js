@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-//import * as asyncActions from '../../actions/async';
+import * as asyncActions from '../../actions/async';
 import * as pageActions from '../../actions/page';
 
 class Kids extends React.Component {
@@ -9,10 +9,15 @@ class Kids extends React.Component {
 	componentWillMount(){
 		const { props } = this;
 
-		if (props.profile && props.profile.roles.indexOf('EduStudent') === -1){
+		if (props.profile 
+			&& props.profile.roles.indexOf('System') === -1
+			&& props.profile.roles.indexOf('EduStudent') === -1
+			
+		){
 			props.redirect('/kids/only');
 		}
 
+		props.getUserResults();
 	}
 
 	render(){
@@ -30,9 +35,11 @@ class Kids extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
 	profile: state.user.profile,
+	//results: state.results,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+	getUserResults: (userId) => dispatch(asyncActions.getUserResults(userId)),
 	redirect: (page) => dispatch(pageActions.setPageWithoutHistory(page)),
 });
 

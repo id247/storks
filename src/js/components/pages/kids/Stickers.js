@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 
 import { PromoOptions } from 'appSettings';
 
+import PointsCounter from '../../../components/common/PointsCounter';
+
 import AppLogo from '../../../components/common/AppLogo';
+import Link from '../../../components/common/Link';
 import Button from '../../../components/common/Button';
 
 import * as asyncActions from '../../../actions/async';
@@ -15,8 +18,13 @@ class Stickers extends React.Component {
 		super(props);
 		this.state = {
 			showFriends: false,
+			stickerId: 1,
 		};
 
+	}
+
+	componentWillMount(){
+		this.props.getFriends();
 	}
 
 	_showFriends(){
@@ -39,6 +47,25 @@ class Stickers extends React.Component {
 		});
 	}
 
+	_selectSticker(stickerId){
+
+		console.log(stickerId);
+
+		this.setState({
+			...this.state,
+			...{
+				stickerId: stickerId,
+			}
+		});
+	}
+
+	_sendSticker(friendId){
+
+		console.log(this.state.stickerId, friendId);
+
+		this.props.sendSticker(this.state.stickerId, friendId);
+	}
+
 	_showFriendsHandler = () => (e) => {
 		e.preventDefault();
 
@@ -49,6 +76,19 @@ class Stickers extends React.Component {
 		e.preventDefault();
 
 		this._hideFriends();
+	}
+
+	_selectStickerHandler = (stickerId) => (e) => {
+		//e.preventDefault();
+
+		this._selectSticker(stickerId);
+	}
+
+
+	_sendStickerHandler = (friendId) => (e) => {
+		e.preventDefault();
+
+		this._sendSticker(friendId);
 	}
 
 	render(){
@@ -65,25 +105,7 @@ class Stickers extends React.Component {
 
 					<ul className="counters__list">
 
-						<li className="counters__item">
-
-							<div className="counters__content">
-
-								<div className="counters__title">
-									<span className="counters__text">
-										МОИ БАЛЛЫ
-									</span>
-								</div>
-
-								<div className="counters__data">
-									<span className="counters__text">
-										100
-									</span>
-								</div>
-
-							</div>
-
-						</li>
+						<PointsCounter />
 
 					</ul>
 
@@ -95,42 +117,44 @@ class Stickers extends React.Component {
 					(
 						<div className="stickers__content">
 
+							<div className="app__back-placeholder">
+
+								<Link href="/kids" mixClass="app__back">
+									НА ГЛАВНУЮ
+								</Link>
+
+							</div>
+
 							<div className="stickers__people people">
 
 								<ul className="people__list">
 
-									{[
-										'Василий',
-										'Иван',
-										'Дмитрий',
-										'Наташа',
-										'Александр',
-										'Ирина',
-									].map( (name, i) => (
+									{props.friends.map( (friend, i) => (
 
 									<li className="people__item" key={'friend-' + i}>
 
-										<div className="people__profile">
+										<div className="people__start">
 
-											<div className="people__avatar-placeholder">
+											<div className="people__profile">
 
-												<img src="https://static.dnevnik.ru/images/avatars/user/a.s.jpg" alt="" className="people__avatar"/>
+												<div className="people__avatar-placeholder">
 
-											</div>
+													<img src={friend.photoSmall} alt="" className="people__avatar"/>
 
-											<div className="people__name">
-												{name}
+												</div>
+
+												<div className="people__name">
+													{friend.firstName}
+												</div>
+
 											</div>
 
 										</div>
 
-
-
-
 										<div className="people__data">
 										
 										{
-											i === 3
+											props.results.friendsIds.indexOf(friend.id) > -1
 											?
 											(
 												<span className="people__send">Отправлено</span>
@@ -142,7 +166,7 @@ class Stickers extends React.Component {
 												size="s"
 												color="orange"
 												type="button"
-												//onClickHandler={this._showFriendsHandler()}
+												onClickHandler={this._sendStickerHandler(friend.id)}
 											>
 												<span className="button__text">Отправить</span>
 											</Button>
@@ -179,7 +203,14 @@ class Stickers extends React.Component {
 					:
 					(
 						<div className="stickers__content">
+					
+							<div className="app__back-placeholder">
 
+								<Link href="/kids" mixClass="app__back">
+									НА ГЛАВНУЮ
+								</Link>
+
+							</div>
 
 							<h1 className="stickers__title">
 								ВЫБЕРИ СТИКЕР
@@ -195,7 +226,8 @@ class Stickers extends React.Component {
 
 											<input type="radio" name="sticker" 
 											className="stickers-item__input"
-											defaultChecked={i===0}
+											checked={sticker === state.stickerId}
+											onChange={this._selectStickerHandler(sticker)}
 											/>
 
 											<span className="stickers-item__image-placeholder">
@@ -241,10 +273,13 @@ class Stickers extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => ({
-	//profile: state.user.profile,
+	friends: state.user.friends,
+	results: state.results,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+	sendSticker: (friendId, stickerId) => dispatch(asyncActions.sendSticker(friendId, stickerId)),
+	getFriends: () => dispatch(asyncActions.getFriends()),
 	setPage: (page) => dispatch(pageActions.setPage(page)),
 });
 

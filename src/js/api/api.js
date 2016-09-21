@@ -88,6 +88,23 @@ function postToWall(userId, data){
 	return Ajax(options);
 }
 
+function postStickerToWall(userId, badge){
+	if (!userId){
+		return paramsError('no userId in API.postStickerToWall');
+	}
+	if (!badge){
+		return paramsError('no badge in API.postStickerToWall');
+	}
+
+	const options = {
+		path: 'users/' + userId + '/wall/badge', 
+		method: 'post',
+		body:  badge,
+	};
+
+	return Ajax(options);
+}
+
 function addKeyToDB(data){
 	if (!data){
 		return paramsError('no data in API.addKeyToDB');
@@ -190,8 +207,10 @@ function voteForCounterFromDB(keyId, label = ''){
 export default {
 	getUser,
 	getUsers,
+	getUserFriendsIds,
 	sendInvites,
 	postToWall,
+	postStickerToWall,
 	addKeyToDB,
 	deleteKeyFromDB,
 	getKeyFromDB,

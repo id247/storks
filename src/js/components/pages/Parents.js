@@ -9,7 +9,10 @@ class Parents extends React.Component {
 	componentWillMount(){
 		const { props } = this;
 
-		if (props.profile && props.profile.roles.indexOf('EduParent') === -1){
+		if (props.profile 
+			&& props.profile.roles.indexOf('System') === -1
+			&& props.profile.roles.indexOf('EduParent') === -1
+		){
 			props.redirect('/parents/only');
 		}
 

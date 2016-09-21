@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 
 import { PromoOptions } from 'appSettings';
 
+import { parseTime } from '../../../helpers/time';
+
 import Button from '../../../components/common/Button';
+import Link from '../../../components/common/Link';
 import AppLogo from '../../../components/common/AppLogo';
 
 import * as asyncActions from '../../../actions/async';
@@ -17,11 +20,11 @@ const paths = {
 			path: 'M73.000,330.000 L95.000,297.000 L118.000,277.000 L141.000,270.000 L158.000,277.000 L169.000,290.000 L182.000,299.000 L197.000,302.000 L216.000,303.000 L223.000,313.000 L224.000,331.000 L223.000,362.000 L216.000,385.000 L214.000,396.000 L223.000,396.000 L233.000,368.000 L241.000,342.000 L241.000,319.000 L233.000,297.000 L219.000,281.000 L199.000,262.000 L178.000,257.000 L158.000,251.000 L133.000,251.000 L117.000,257.000 L98.000,271.000 L82.000,296.000 L73.000,319.000 L73.000,330.000 Z',
 		},
 		{
-			id: 'stork',
+			id: 'stork-mother',
 			path: 'M239.000,178.000 L242.000,130.000 L242.000,110.000 L243.000,92.000 L254.000,83.000 L265.000,77.000 L272.000,77.000 L286.000,85.000 L292.000,95.000 L292.000,122.000 L293.000,142.000 L296.000,188.000 L273.000,187.000 L263.000,204.000 L256.000,189.000 L239.000,178.000 Z',
 		},
 		{
-			id: 'mother',
+			id: 'stork-mother',
 			path: 'M349.000,39.000 L370.000,53.000 L379.000,63.000 L381.000,79.000 L377.000,95.000 L371.000,110.000 L365.000,123.000 L358.000,136.000 L349.000,146.000 L349.000,152.000 L360.000,163.000 L366.000,173.000 L366.000,182.000 L345.000,177.000 L332.000,182.000 L328.000,190.000 L307.000,179.000 L309.000,161.000 L317.000,147.000 L327.000,142.000 L315.000,134.000 L309.000,117.000 L300.000,103.000 L294.000,86.000 L291.000,71.000 L301.000,51.000 L323.000,37.000 L349.000,39.000 Z',
 		},
 		{
@@ -39,6 +42,10 @@ const paths = {
 		{
 			id: 'yes',
 			path: 'M169.000,356.000 L185.000,351.000 L199.000,358.000 L207.000,368.000 L209.000,381.000 L204.000,394.000 L194.000,400.000 L179.000,399.000 L161.000,387.000 L159.000,370.000 L169.000,356.000 Z',
+		},
+		{
+			id: 'china',
+			path: 'M363.000,376.000 L361.000,387.000 L362.000,408.000 L370.000,420.000 L386.000,424.000 L410.000,419.000 L418.000,399.000 L416.000,374.000 L400.000,360.000 L375.000,358.000 L363.000,376.000 Z',
 		},
 	],
 	right: [
@@ -73,6 +80,10 @@ const paths = {
 		{
 			id: 'yes',
 			path: 'M169.000,356.000 L185.000,351.000 L199.000,358.000 L207.000,368.000 L209.000,381.000 L204.000,394.000 L194.000,400.000 L179.000,399.000 L161.000,387.000 L159.000,370.000 L169.000,356.000 Z',
+		},
+		{
+			id: 'china',
+			path: 'M363.000,376.000 L361.000,387.000 L362.000,408.000 L370.000,420.000 L386.000,424.000 L410.000,419.000 L418.000,399.000 L416.000,374.000 L400.000,360.000 L375.000,358.000 L363.000,376.000 Z',
 		},
 	],
 }
@@ -120,7 +131,7 @@ class Game extends React.Component {
 		this.setState({
 			...this.state,
 			...{
-				startTime: new Date().getTime(),
+				startTime: new Date().getTime(),//- 60*2000,
 			}
 		});
 
@@ -138,14 +149,6 @@ class Game extends React.Component {
 				time: new Date().getTime() - this.state.startTime,
 			}
 		});
-	}
-
-	_getTime(milliseconds){
-		const mseconds =(milliseconds%1000).toFixed(2);
-		const seconds = ((milliseconds/1000)%60).toFixed(1);
-		const minutes = Math.round((seconds/(1000*60))%60);
-
-		return minutes + ':' + seconds;
 	}
 
 	_correctAnswer(id){
@@ -178,6 +181,15 @@ class Game extends React.Component {
 				showResults: true,
 			}
 		});
+
+		props.setGameData({
+			points: state.correctAnswers,
+			time: state.time,
+		});
+	}
+
+	_getTime(ms){
+		return parseTime(ms);
 	}
 
 	_selectAnswerHandler = (id) => (e) => {
@@ -234,6 +246,14 @@ class Game extends React.Component {
 
 				<div className="game__content">
 
+					<div className="app__back-placeholder">
+
+						<Link href="/kids" mixClass="app__back">
+							НА ГЛАВНУЮ
+						</Link>
+
+					</div>
+
 					{
 						state.showResults
 						?
@@ -248,13 +268,13 @@ class Game extends React.Component {
 
 									<li className="game-results__item">
 
-										Правильных ответов: {state.correctAnswers}
+										Время: {this._getTime(state.time)}
 
 									</li>
 
 									<li className="game-results__item">
 
-										Время: {this._getTime(state.time)}
+										Заработано 10 очков
 
 									</li>
 
@@ -381,7 +401,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-	getResults: (data) => dispatch(asyncActions.getResults(data)),
+	setGameData: (data) => dispatch(asyncActions.setGameData(data)),
 	redirect: (page) => dispatch(pageActions.setPageWithoutHistory(page)),
 	goTo: (page) => dispatch(pageActions.setPage(page)),
 });

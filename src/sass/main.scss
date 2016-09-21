@@ -70,8 +70,9 @@
 		min-height: 100vh;
 		padding: 20px 10px;
 
-		background: #2d64b6 url(../images/bg/home.jpg) 50% 0 no-repeat;
+		background: #2d64b6 url(../images/bg/home.jpg) 50% 50% no-repeat;
 		background-size: cover;
+		background-attachment: fixed;
 		color: #fff;
 
 
@@ -112,6 +113,25 @@
 
 	&__content{
 		text-align: center;
+	}
+
+	&__title{
+		color: $orange;
+		font-size: 36px;
+		margin: 0 0 20px;
+	}
+
+	&__back-placeholder{
+		text-align: center;
+		margin: 0 0 20px;
+	}
+
+	&__back{
+		opacity: .5;
+
+		&:hover{
+			opacity: 1;
+		}
 	}
 
 	&__title{
@@ -246,6 +266,53 @@
 	}
 }
 
+
+/* ==========================================================================
+ * user
+ * ========================================================================== */
+
+.user{
+	
+	&__avatar-placeholder{
+		width: 40px;
+		height: 40px;
+		overflow: hidden;
+		border-radius: 50%;
+		display: inline-block;
+		vertical-align: middle;
+		margin: 0 15px 0 0;
+	}
+
+	&__avatar{
+		width: 100%;
+	}
+
+	&__content{
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	&__name-outer{
+		transform: skewX(-15deg);	
+		display: inline-block;
+		vertical-align: middle;
+		margin: 0 10px 0 0;
+		border-radius: 6px;
+		padding: 9px;
+		background: #fff;
+		color: #000;	
+	}
+
+	&__name{
+		transform: skewX(15deg);
+	}
+
+	&__logout{
+		display: inline-block;	
+		vertical-align: middle;	
+	}
+}
+
 /* ==========================================================================
  * team
  * ========================================================================== */
@@ -258,8 +325,8 @@
 		margin: 0 0 25px;
 	}
 
-	&__{
-		
+	&__user{
+		padding: 30px 0 0;
 	}
 }
 
@@ -514,25 +581,27 @@
  * ========================================================================== */
 
 .quiz{
-	padding-top: 0;
-	display: block;
+	//padding-top: 0;
+	//display: block;
 
 	&:after{
-		// content: url(../images/stork.png);
-		// position: absolute;
-		// bottom: -10px;
-		// left: 50%;
-		// margin: 0 0 0 200px;
+		content: url(../images/stork.png);
+		position: absolute;
+		bottom: -10px;
+		left: 50%;
+		margin: 0 0 0 250px;
 	}
 
 	&__content{
-		background: url(../images/stork-2.png) 35% 0 no-repeat;
-		padding: 164px 0 0; 
+		max-width: 800px;
+		margin: 0 auto;
+		//background: url(../images/stork-2.png) 35% 0 no-repeat;
+		//padding: 164px 0 0; 
 	}
 
 	&__frame{
 		width: 770px;
-		margin: 0 auto;
+		margin: 0 auto 30px;
 		background: #00adce;
 		padding: 11px;
 		border-radius: 4px;
@@ -585,7 +654,7 @@
 
 	&__title{
 		//max-width: 460px;
-		font-size: 32px;
+		font-size: 36px;
 		font-family: $sans;
 		font-weight: 300;
 		margin: 0 auto 30px;
@@ -612,7 +681,7 @@
 	&__answer-button{
 		background: none;
 		border: 0;
-		font-size: 25px;
+		font-size: 32px;
 		font-family: $futuris;
 		color: #fff;
 		cursor: pointer;
@@ -633,13 +702,13 @@
 
 	&__title{
 		font-size: 36px;
-		margin: 0 0 20px;
+		margin: 0 0 40px;
 		text-transform: uppercase;
 	}
 
 	&__list{
 		font-size: 26px;
-		margin: 0 0 20px;
+		margin: 0 0 40px;
 	}
 
 	&__item{
@@ -684,7 +753,7 @@
 	
 	background-image: url(../images/bg/game.jpg);
 	background-attachment: fixed;
-	padding-top: 150px;
+	padding-top: 70px;
 
 	&__content{
 		
@@ -775,13 +844,13 @@
 
 	&__title{
 		font-size: 36px;
-		margin: 0 0 20px;
+		margin: 0 0 40px;
 		text-transform: uppercase;
 	}
 
 	&__list{
 		font-size: 26px;
-		margin: 0 0 20px;
+		margin: 0 0 40px;
 	}
 
 	&__item{
@@ -799,6 +868,7 @@
  * ========================================================================== */
 
 .stickers{
+
 
 	&__title{
 		font-size: 26px;
@@ -842,9 +912,9 @@
 
 
 		&:checked + .stickers-item__image-placeholder{
-			transform: scale(.98);
-			box-shadow: 0 0 20px rgba(255,255,255,1),
-						0 0 10px rgba(255,255,255,1);
+			//transform: scale(.98);
+			box-shadow: 0 0 0 7px $orange;//,
+						//0 0 10px rgba(255,255,255,1);
 		}
 	}
 
@@ -873,18 +943,48 @@
 	&__list{
 		width: 500px;
 		margin: auto;
+		display: table;
+		text-align: left;
 	}
 
 	&__item{
-		@include clearfix;
-		margin: 0 0 25px;
-		&:last-child{
-			margin-bottom: 0;
-		}
+		display: table-row;
+	}
+
+	&__start,
+	&__data{
+		display: table-cell;
+		vertical-align: bottom;
+		padding: 15px 0;
+	}
+
+	&__start{
+		overflow: hidden;
+	}
+
+	&__data{
 	}
 
 	&__profile{
-		float: left;
+		display: inline-block;
+		position: relative;
+		&:after{
+			content: '';
+			border-bottom: 1px dashed;
+			width: 1000px;
+			position: absolute;
+			bottom: 7px;
+			left: 100%;
+			margin: 0 0 0 3px;
+		}
+	}
+
+	&__score{
+		font-size: 20px;
+		margin: 0 0 5px;
+		&:last-child{
+			margin-bottom: 0;
+		}
 	}
 
 	&__avatar-placeholder{
@@ -909,9 +1009,7 @@
 		vertical-align: middle;
 	}
 
-	&__data{
-		float: right;
-	}
+
 
 	&__send{
 		display: inline-block;

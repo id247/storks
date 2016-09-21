@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 
 //import User from '../../components/user/User';
 
+import Link from '../../../components/common/Link';
+import PointsCounter from '../../../components/common/PointsCounter';
+import TimeCounter from '../../../components/common/TimeCounter';
+
 //import * as asyncActions from '../../actions/async';
 import * as pageActions from '../../../actions/page';
 
@@ -23,25 +27,9 @@ class Kids extends React.Component {
 
 					<ul className="counters__list">
 
-						<li className="counters__item">
+						<PointsCounter />
 
-							<div className="counters__content">
-
-								<div className="counters__title">
-									<span className="counters__text">
-										МОИ БАЛЛЫ
-									</span>
-								</div>
-
-								<div className="counters__data">
-									<span className="counters__text">
-										100
-									</span>
-								</div>
-
-							</div>
-
-						</li>
+						<TimeCounter />
 
 						<li className="counters__item">
 
@@ -49,13 +37,9 @@ class Kids extends React.Component {
 
 								<div className="counters__title">
 									<span className="counters__text">
-										МОЕ ВРЕМЯ
-									</span>
-								</div>
-
-								<div className="counters__data">
-									<span className="counters__text">
-										01:33
+										<Link href="/kids/top" mixClass="counters__href">
+											ОБЩИЙ РЕЙТИНГ
+										</Link>
 									</span>
 								</div>
 
@@ -67,7 +51,7 @@ class Kids extends React.Component {
 
 				</div>
 
-				<div className="home-kids__content">
+				<div className="app__content home-kids__content">
 
 					<div className="home-kids__logo-placeholder">
 
@@ -75,7 +59,7 @@ class Kids extends React.Component {
 
 					</div>
 
-					<h1 className="home-kids__title">
+					<h1 className="app__title home-kids__title">
 						ЗАРАБАТЫВАЙ БАЛЛЫ И ПОЛУЧАЙ ПРИЗЫ
 					</h1>
 

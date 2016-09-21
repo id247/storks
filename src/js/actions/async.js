@@ -3,7 +3,7 @@ import OAuth from '../api/hello';
 
 import { HTMLencode, HTMLdecode } from '../helpers/escape';
 
-import { CommentsOptions } from 'appSettings';
+import { CommentsOptions, PromoOptions } from 'appSettings';
 
 import * as visual from '../helpers/visual.js';
 
@@ -11,6 +11,7 @@ import * as loadingActions 		from '../actions/loading';
 import * as errorActions 		from '../actions/error';
 import * as userActions 		from '../actions/user';
 import * as pageActions 		from '../actions/page';
+import * as resultsActions 		from '../actions/results';
 
 import * as commentsActions 	from '../actions/comments';
 import * as commentsFormActions from '../actions/comments-form';
@@ -88,6 +89,176 @@ export function logout() {
 		dispatch(pageActions.setPageWithoutHistory('/'));
 	}
 }
+
+//friends
+//
+
+
+
+export function getFriends() {
+	return dispatch => {
+
+		dispatch(loadingActions.loadingShow());	
+		
+		API.getUserFriendsIds()
+		.then( friendsIds => {
+
+			dispatch(userActions.userFriendsIdsSet(friendsIds));
+			return API.getUsers(friendsIds);
+		})
+		.then( friends => {
+			dispatch(loadingActions.loadingHide());
+			dispatch(userActions.userFriendsSet(friends));
+		})
+		.catch( err => { 
+			dispatch(loadingActions.loadingHide());
+
+			dispatch(catchError(err)); 
+		});
+	}
+}
+
+
+//stockers
+
+
+export function sendSticker(stickerId, friendId) {
+	return dispatch => {
+
+		if (!stickerId || !friendId){
+			return false;
+		}
+
+		dispatch(loadingActions.loadingShow());	
+
+		const badge = {
+			imageUrl: PromoOptions.cdn + 'images/stickers/' + stickerId + '.png',
+			redirectUrl: PromoOptions.url,
+			//text: 'Подпись',
+		}
+		
+		API.postStickerToWall(friendId, badge)
+		.then( res => {
+
+			dispatch(loadingActions.loadingHide());
+			console.log(res);
+
+			if (res === 'ok'){
+				dispatch(resultsActions.addFriendId(friendId));
+				dispatch(sendResultsToDB());
+			}
+		})
+		.catch( err => { 
+			dispatch(loadingActions.loadingHide());
+
+			dispatch(catchError(err)); 
+		});
+	}
+}
+
+
+// results
+
+
+
+export function getUserResults() {
+	return (dispatch, getState) => {
+
+		const userId = getState().user.profile.id;
+
+		if (!userId){
+			return false;
+		}
+		
+		dispatch(loadingActions.loadingShow());	
+
+		return API.getKeyFromDB('results-' + userId)
+		.then( results => {
+			dispatch(loadingActions.loadingHide());
+			console.log(results);
+
+			try{
+				const data = JSON.parse(HTMLdecode(results.Value));	
+
+				console.log(data);
+
+				dispatch(resultsActions.setAllData(data));
+			}catch(e){
+				console.log(e);
+			}
+
+		})
+		.catch( err => { 
+			dispatch(loadingActions.loadingHide());
+
+			//not exists yet, its ok
+			if (err.message && err.message === 404){
+				return;
+			}
+
+			dispatch(catchError(err)); 
+		});
+
+	}
+}
+
+
+export function setQuizData(data) {
+	return (dispatch) => {
+
+		dispatch(resultsActions.setQuizData(data));
+
+		dispatch(sendResultsToDB());
+
+	}
+}
+
+export function setGameData(data) {
+	return (dispatch) => {
+
+		dispatch(resultsActions.setGameData(data));
+
+		dispatch(sendResultsToDB());
+
+	}
+}
+
+
+export function sendResultsToDB(value) {
+	return (dispatch, getState) => {
+
+		const results = getState().results;
+
+		console.log(results);
+
+		const userId = getState().user.profile.id;
+
+		if (!userId){
+			return false;
+		}
+
+		dispatch(loadingActions.loadingShow());	
+
+		const data = {
+			key: 'results-' + userId,
+			value: HTMLencode(JSON.stringify(results)),
+			permissionLevel: 'Public',
+			label: 'results',
+		}
+
+		return API.addKeyToDB(data)
+		.then( (res) => {	
+			dispatch(loadingActions.loadingHide());
+
+		})
+		.catch( err => { 
+			dispatch(loadingActions.loadingHide());
+
+			dispatch(catchError(err)); 
+		});
+	}
+}
+
 
 
 

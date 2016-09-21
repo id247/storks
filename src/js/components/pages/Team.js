@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import AppLogo from '../../components/common/AppLogo';
 import Button from '../../components/common/Button';
+import User from '../../components/user/User';
 
 import * as asyncActions from '../../actions/async';
 import * as pageActions from '../../actions/page';
@@ -121,6 +122,13 @@ class Team extends React.Component {
 						</div>
 
 					</div>
+
+					{
+						props.profile
+						?
+						<User mixClass="team__user" />
+						: null
+					}
 
 				</div>
 

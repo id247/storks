@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 
 import { PromoOptions } from 'appSettings';
 
+import { parseTime } from '../../../helpers/time';
+
 import AppLogo from '../../../components/common/AppLogo';
+import Link from '../../../components/common/Link';
 import Button from '../../../components/common/Button';
 
 import * as asyncActions from '../../../actions/async';
@@ -181,12 +184,9 @@ class Quiz extends React.Component {
 		});
 	}
 
-	_getTime(milliseconds){
-		const mseconds =(milliseconds%1000).toFixed(2);
-		const seconds = ((milliseconds/1000)%60).toFixed(1);
-		const minutes = Math.round((seconds/(1000*60))%60);
 
-		return minutes + ':' + seconds;
+	_getTime(ms){
+		return parseTime(ms);
 	}
 
 	_nextQuestion(){
@@ -201,6 +201,11 @@ class Quiz extends React.Component {
 				...{
 					showResults: true,
 				}
+			});
+
+			props.setQuizData({
+				points: state.points,
+				time: state.time,
 			});
 
 		}else{
@@ -244,10 +249,9 @@ class Quiz extends React.Component {
 		const points = [...checkedAnswers].reduce( (prev, answer) => {
 			return prev + parseInt(answer.value);
 		}, 0);
-		// if (questions[questionIndex - 1].correct === answer){
-		// 	console.log('correct');
+
+
 		this._addAnswerPoints(points);
-		// }
 
 		setTimeout(() => { //hack for update state twice
 		 	this._nextQuestion();
@@ -403,80 +407,76 @@ class Quiz extends React.Component {
 
 				<div className="quiz__content">
 
-					<div className="quiz__frame">
+					<div className="app__back-placeholder">
 
-						<div className="quiz__frame-inner">
+						<Link href="/kids" mixClass="app__back">
+							НА ГЛАВНУЮ
+						</Link>
 
-							<div className="quiz__frame-content">
-
-							{
-								state.showResults
-								?
-								(
-									<div className="quiz__results quiz-results">
-
-										<div className="quiz-results__title">
-											Результаты:
-										</div>
-
-										<ul className="quiz-results__list">
-
-											<li className="quiz-results__item">
-
-												Правильных ответов: {state.correctAnswers}
-
-											</li>
-
-											<li className="quiz-results__item">
-
-												Получено очков: {state.points}
-
-											</li>
-
-											<li className="quiz-results__item">
-
-												Время: {this._getTime(state.time)}
-
-											</li>
-
-										</ul>	
-
-										<div className="quiz-results__button-placeholder">						
-
-											<Button
-												mixClass="quiz-results__button"
-												size="m"
-												color="orange"
-												type="button"
-												onClickHandler={this._goBackHandler()}
-											>
-												<span className="button__text">Назад к активностям</span>
-											</Button>
-
-										</div>	
-
-									</div>
-								)
-								:
-								(
-								<div className="quiz__questions">
-
-									{questions.map( (question, index) => (
-										this._question(index + 1, question)
-									))}
-
-								</div>
-								)
-							}
-
-							</div>
-						
-						</div>
-					
 					</div>
 
-				</div>
 
+					{
+						state.showResults
+						?
+						(
+							<div className="quiz__results quiz-results">
+
+								<div className="quiz-results__title">
+									Результаты:
+								</div>
+
+								<ul className="quiz-results__list">
+
+									<li className="quiz-results__item">
+
+										Правильных ответов: {state.correctAnswers}
+
+									</li>
+
+									<li className="quiz-results__item">
+
+										Получено очков: {state.points}
+
+									</li>
+
+									<li className="quiz-results__item">
+
+										Время: {this._getTime(state.time)}
+
+									</li>
+
+								</ul>	
+
+								<div className="quiz-results__button-placeholder">						
+
+									<Button
+										mixClass="quiz-results__button"
+										size="m"
+										color="orange"
+										type="button"
+										onClickHandler={this._goBackHandler()}
+									>
+										<span className="button__text">Назад к активностям</span>
+									</Button>
+
+								</div>	
+
+							</div>
+						)
+						:
+						(
+							<div className="quiz__questions">
+
+								{questions.map( (question, index) => (
+									this._question(index + 1, question)
+								))}
+
+							</div>
+						)
+					}
+
+				</div>
 
 				<div className={('app__modal modal ' + (state.modalVisible ? 'modal--visible' : '') )}>
 
@@ -531,7 +531,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-	getResults: (data) => dispatch(asyncActions.getResults(data)),
+	setQuizData: (data) => dispatch(asyncActions.setQuizData(data)),
 	redirect: (page) => dispatch(pageActions.setPageWithoutHistory(page)),
 	goTo: (page) => dispatch(pageActions.setPage(page)),
 });

@@ -20,25 +20,27 @@ class User extends React.Component {
 		return(
 			<div className={( (props.mixClass ? props.mixClass : '') + ' login')}>
 
-				<div className="forum-user__avatar-placeholder">
+				<div className="user__avatar-placeholder">
 
-					<img src={avatar} alt="" className="forum-user__avatar" />
+					<img src={avatar} alt="" className="user__avatar" />
 
 				</div>
 
-				<div className="forum-user__content">
-				
-					<div className="forum-user__name">
-						Вы вошли как {props.profile.firstName}  {props.profile.lastName} 
+				<div className="user__content">
+					
+					<div className="user__name-outer">
+						<div className="user__name">
+							{props.profile.firstName}  {props.profile.lastName} 
+						</div>
 					</div>
 
-					<div className="forum-user__logout">
+					<div className="user__logout">
 
 						<button 
-							className="button button--s button--blue-light"
+							className="button button--s button--orange"
 							onClick={this._logoutHandler()}
 						>
-							Выход
+							<span className="button__text">Выход</span>
 						</button>
 
 					</div>

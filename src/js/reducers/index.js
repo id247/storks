@@ -4,7 +4,7 @@ import { error } from './error';
 import { user } from './user';
 import { loading } from './loading';
 import { page } from './page';
-import { quiz } from './quiz';
+import { results } from './results';
 import { comments } from './comments';
 import { commentsForm } from './comments-form';
 
@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
 	loading,
 	user,
 	page,
-	quiz,
+	results,
 	comments,
 	commentsForm,
 });

@@ -18,6 +18,7 @@ import KidsIndex 	from '../components/pages/kids/Kids';
 import Quiz 		from '../components/pages/kids/Quiz';
 import Game 		from '../components/pages/kids/Game';
 import Stickers 	from '../components/pages/kids/Stickers';
+import Top 			from '../components/pages/kids/Top';
 import KidsOnly 	from '../components/pages/kids/Only';
 
 const routes = (
@@ -35,6 +36,7 @@ const routes = (
 				<Route path="quiz" component={Quiz} />
 				<Route path="game" component={Game} />
 				<Route path="stickers" component={Stickers} />
+				<Route path="top" component={Top} />
 				<Route path="only" component={KidsOnly} />
 			</Route>
 
