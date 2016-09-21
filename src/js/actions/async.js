@@ -207,7 +207,6 @@ export function setQuizData(data) {
 	return (dispatch) => {
 
 		dispatch(resultsActions.setQuizData(data));
-
 		dispatch(sendResultsToDB());
 
 	}
@@ -217,12 +216,10 @@ export function setGameData(data) {
 	return (dispatch) => {
 
 		dispatch(resultsActions.setGameData(data));
-
 		dispatch(sendResultsToDB());
 
 	}
 }
-
 
 export function sendResultsToDB(value) {
 	return (dispatch, getState) => {

@@ -39,17 +39,19 @@ export function gamePoints(state = 0, action) {
 	}
 }
 
+
 export function gameTime(state = 0, action) {
 	switch (action.type) {
 		case actions.RESULTS_SET_ALL_DATA:
 			return 	action.payload.gameTime ? action.payload.gameTime : state;
 
 		case actions.RESULTS_SET_GAME_DATA:
-			return 	action.payload.time;;
+			return 	action.payload.time;
 		default:
 			return state;
 	}
 }
+
 
 export function friendsIds(state = [], action) {
 	switch (action.type) {
