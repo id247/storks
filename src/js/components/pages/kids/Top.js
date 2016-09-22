@@ -1,6 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { PromoOptions } from 'appSettings';
+
+import { parseTime } from '../../../helpers/time';
+
 import AppLogo from '../../../components/common/AppLogo';
 import Link from '../../../components/common/Link';
 import Button from '../../../components/common/Button';
@@ -16,8 +20,36 @@ class Only extends React.Component {
 		props.getAllResults();
 	}
 
+	_sortTop(top){
+
+		const keysWithUsers = top.keys.map( key => {
+			let user = false;
+			const usersFiltered = top.users.filter( user => {
+				//console.log(user.id, key.UserId);
+				return (user.id === key.UserId) 
+			});
+
+			if (usersFiltered.length === 1){
+				user = usersFiltered[0];
+			}
+
+			return {
+				...key,
+				...{user: user},
+			}
+		})
+		.filter( key => key.user );
+
+		//console.log(keysWithUsers);
+
+		return keysWithUsers;
+
+	}
+
 	render(){
 		const { props } = this;
+
+		const sortedTop = this._sortTop(props.top);
 
 		return(
 			<div className="app__page top">
@@ -38,21 +70,14 @@ class Only extends React.Component {
 					</div>
 
 					<h1 className="app__title">
-						РЕЙТИНГ УЧАСТНИКОВ
+						РЕЙТИНГ УЧАСТНИКОВ ТОП 100
 					</h1>
 
 					<div className="top__people people">
 
 						<ul className="people__list">
 
-							{[
-								'Василий',
-								'Иван',
-								'Дмитрий',
-								'Наташа',
-								'Александр',
-								'Ирина',
-							].map( (name, i) => (
+							{sortedTop.map( (item, i) => (
 
 							<li className="people__item" key={'people-' + i}>
 
@@ -62,12 +87,14 @@ class Only extends React.Component {
 
 										<div className="people__avatar-placeholder">
 
-											<img src="https://static.dnevnik.ru/images/avatars/user/a.s.jpg" alt="" className="people__avatar"/>
+											<img src={item.user.photoSmall} alt="" className="people__avatar"/>
 
 										</div>
 
 										<div className="people__name">
-											{name}
+											<a href={PromoOptions.server + '/user/user.aspx?user=' + item.user.id} class="people__href" target="_blank">
+												{item.user.firstName}
+											</a>
 										</div>
 
 									</div>
@@ -77,11 +104,11 @@ class Only extends React.Component {
 								<div className="people__data">
 									
 									<div className="people__score">
-										Очки 45
+										Очки {item.totalPoints}
 									</div>
 									
 									<div className="people__score">
-										Время 0:56.5
+										Время {parseTime(item.totalTime)}
 									</div>
 
 								</div>
@@ -105,6 +132,7 @@ class Only extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
 	profile: state.user.profile,
+	top: state.top,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

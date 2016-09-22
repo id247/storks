@@ -5,13 +5,15 @@ import { HTMLencode, HTMLdecode } from '../helpers/escape';
 
 import { CommentsOptions, PromoOptions } from 'appSettings';
 
-import * as visual from '../helpers/visual.js';
+import * as visual from '../helpers/visual';
+import * as sort from '../helpers/sort';
 
 import * as loadingActions 		from '../actions/loading';
 import * as errorActions 		from '../actions/error';
 import * as userActions 		from '../actions/user';
 import * as pageActions 		from '../actions/page';
 import * as resultsActions 		from '../actions/results';
+import * as topActions 			from '../actions/top';
 
 import * as commentsActions 	from '../actions/comments';
 import * as commentsFormActions from '../actions/comments-form';
@@ -212,18 +214,47 @@ export function getAllResults() {
 		.then( results => {
 			dispatch(loadingActions.loadingHide());
 			
-			console.log(results);
+			if (results.Keys.length > 0){
+				
+				const resultKeys = results.Keys.map( key => {
+				
+					try{
+						const value = JSON.parse(HTMLdecode(key.Value));	
 
-			// try{
-			// 	const data = JSON.parse(HTMLdecode(results.Value));	
+						return {
+							...key,
+							...{
+								totalPoints: value.gamePoints + value.quizPoints + value.friendsIds.length * 5,
+								totalTime: value.gameTime + value.quizTime,
+							},
+						}
 
-			// 	console.log(data);
+					}catch(e){
+						console.log(e);
+						return false;
+					}
 
-			// 	dispatch(resultsActions.setAllData(data));
-			// }catch(e){
-			// 	console.log(e);
-			// }
+				})
+				.filter( key => key );
 
+				const sortedResultKeys = [...resultKeys]
+				.sort(sort.sortBy('totalPoints', {
+					name:'totalTime', primer: parseInt, reverse: true
+				}))
+				.slice(0, 100); //get top 100
+
+				dispatch(topActions.setKeys(sortedResultKeys));
+
+				console.log(sortedResultKeys);
+
+				const usersIds = sortedResultKeys.map( key => key.UserId);
+			
+				return API.getUsers(usersIds);
+			}
+
+		})		
+		.then( users => {			
+			dispatch(topActions.setUsers(users));
 		})
 		.catch( err => { 
 			dispatch(loadingActions.loadingHide());

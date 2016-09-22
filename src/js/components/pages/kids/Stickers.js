@@ -213,8 +213,16 @@ class Stickers extends React.Component {
 							</div>
 
 							<h1 className="stickers__title">
-								ВЫБЕРИ СТИКЕР
+								ОТПРАВЬ СТИКЕР
 							</h1>
+
+							<div className="stickers__text text">
+								<p>
+									За каждый отправленный на стену другу стикер<br/>
+									начисляются +5 баллов рейтинга. <br/> 
+									Другу можно отправить только 1 стикер. 
+								</p>
+							</div>
 
 							<ul className="stickers__list">
 
@@ -254,7 +262,7 @@ class Stickers extends React.Component {
 									type="button"
 									onClickHandler={this._showFriendsHandler()}
 								>
-									<span className="button__text">Отправь другу</span>
+									<span className="button__text">Выбрать получателя</span>
 								</Button>
 
 							</div>

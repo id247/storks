@@ -980,9 +980,15 @@
 
 	&__title{
 		font-size: 26px;
-		margin: 0 0 40px;
+		margin: 0 0 30px;
 		text-align: center;
 		color: $orange;
+	}
+
+	&__text{
+		margin: 0 0 30px;	
+		font-size: 18px;
+		text-align: center;
 	}
 
 	&__list{
@@ -1071,6 +1077,8 @@
 	}
 
 	&__data{
+		width: 50px;
+		white-space: nowrap;
 	}
 
 	&__profile{
