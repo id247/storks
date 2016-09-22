@@ -203,6 +203,38 @@ export function getUserResults() {
 }
 
 
+export function getAllResults() {
+	return (dispatch, getState) => {
+
+		dispatch(loadingActions.loadingShow());	
+
+		return API.getKeysFromDB('results', 1, 1000)
+		.then( results => {
+			dispatch(loadingActions.loadingHide());
+			
+			console.log(results);
+
+			// try{
+			// 	const data = JSON.parse(HTMLdecode(results.Value));	
+
+			// 	console.log(data);
+
+			// 	dispatch(resultsActions.setAllData(data));
+			// }catch(e){
+			// 	console.log(e);
+			// }
+
+		})
+		.catch( err => { 
+			dispatch(loadingActions.loadingHide());
+
+			dispatch(catchError(err)); 
+		});
+
+	}
+}
+
+
 export function setQuizData(data) {
 	return (dispatch) => {
 

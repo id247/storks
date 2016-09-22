@@ -5,7 +5,7 @@ import AppLogo from '../../../components/common/AppLogo';
 import Link from '../../../components/common/Link';
 import Button from '../../../components/common/Button';
 
-//import * as asyncActions from '../../actions/async';
+import * as asyncActions from '../../../actions/async';
 import * as pageActions from '../../../actions/page';
 
 class Only extends React.Component {
@@ -13,6 +13,7 @@ class Only extends React.Component {
 	componentWillMount(){
 		const { props } = this;
 
+		props.getAllResults();
 	}
 
 	render(){
@@ -107,6 +108,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+	getAllResults: () => dispatch(asyncActions.getAllResults()),
 	redirect: (page) => dispatch(pageActions.setPageWithoutHistory(page)),
 	goTo: (page) => dispatch(pageActions.setPage(page)),
 });

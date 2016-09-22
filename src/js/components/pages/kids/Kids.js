@@ -31,7 +31,7 @@ class Kids extends React.Component {
 
 						<TimeCounter />
 
-						<li className="counters__item">
+						{/*<li className="counters__item">
 
 							<div className="counters__content">
 
@@ -45,7 +45,7 @@ class Kids extends React.Component {
 
 							</div>
 
-						</li>
+						</li>*/}
 
 					</ul>
 

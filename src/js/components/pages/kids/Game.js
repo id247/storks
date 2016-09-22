@@ -63,7 +63,7 @@ const paths = {
 		},
 		{
 			id: 'wolf-2',
-			path: 'M370.000,186.000 L349.000,167.000 L337.000,142.000 L336.000,123.000 L342.000,108.000 L355.000,93.000 L362.000,74.000 L375.000,87.000 L381.000,69.000 L396.000,87.000 L416.000,88.000 L431.000,96.000 L438.000,116.000 L435.000,129.000 L432.000,138.000 L370.000,186.000 Z',
+			path: 'M346.000,135.000 L330.000,120.000 L311.000,102.000 L303.000,87.000 L309.000,72.000 L322.000,57.000 L329.000,38.000 L342.000,51.000 L348.000,33.000 L363.000,51.000 L383.000,52.000 L389.000,63.000 L391.000,79.000 L387.000,100.000 L372.000,122.000 L346.000,135.000 Z',
 		},
 		{
 			id: 'boy',
@@ -89,7 +89,22 @@ const paths = {
 }
 
 											
-											
+const answers = {
+	left: [
+		'stork-mother',
+		'china',
+		'green-bird',
+	],
+	right: [
+		'parents',
+		'wolf-1',
+		'boy',
+		'wolf-2',
+		'letter',
+		'hair',
+		'yes',
+	],
+};											
 											
 											
 											
@@ -314,7 +329,18 @@ class Game extends React.Component {
 
 									<div className="game-image">
 
-										<img src={(PromoOptions.cdn + 'images/game/1-1.jpg')} className="game-image__image" alt="" />
+										<img src={(PromoOptions.cdn + 'images/game/1-1.jpg?3')} className="game-image__image" alt="" width="500" height="500" />
+
+										{answers.left.map( (answer, i) => (
+
+											<div 
+												key={'answer-right' + i}
+												className={'game-image__answer game-image__answer--' + answer
+													+ (state.founded.indexOf(answer) > -1 ? ' game-image__answer--visible' : '')
+												}>
+											</div>
+
+										))}
 
 										<svg 
 											className="game-image__svg"
@@ -350,7 +376,18 @@ class Game extends React.Component {
 
 									<div className="game-image">
 
-										<img src={(PromoOptions.cdn + 'images/game/1-2.jpg')} className="game-image__image" alt="" />
+										<img src={(PromoOptions.cdn + 'images/game/1-2.jpg?3')} className="game-image__image" alt="" width="500" height="500" />
+
+										{answers.right.map( (answer, i) => (
+
+											<div 
+												key={'answer-right' + i}
+												className={'game-image__answer game-image__answer--' + answer
+													+ (state.founded.indexOf(answer) > -1 ? ' game-image__answer--visible' : '')
+												}>
+											</div>
+
+										))}
 
 										<svg 
 											className="game-image__svg"

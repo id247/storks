@@ -800,8 +800,116 @@
 	
 	&__image{
 		display: block;
-		width: 100%;
-		height: auto;
+		width: 500px;
+		height: 500px;
+	}
+
+	&__answer{
+		position: absolute;
+		
+		//opacity: .7;
+		
+		opacity: 0;
+		//visibility: hidden;
+		//opacity: 1;
+
+		transition: all .4s;
+
+		&--letter{
+			bottom: 9px;
+			right: 125px;
+
+			background: url(../images/game/answers/letter.jpg) 50% 0 no-repeat;
+			width: image-width('../assets/images/game/answers/letter.jpg');
+			height: image-height('../assets/images/game/answers/letter.jpg');
+		}
+
+		&--stork-mother{
+			top: 21px;
+			right: 76px;
+
+			background: url(../images/game/answers/stork-mother.jpg) 50% 0 no-repeat;
+			width: image-width('../assets/images/game/answers/stork-mother.jpg');
+			height: image-height('../assets/images/game/answers/stork-mother.jpg');
+		}
+
+		&--hair{
+			bottom: 79px;
+			left: 55px;
+
+			background: url(../images/game/answers/heir.jpg) 50% 0 no-repeat;
+			width: image-width('../assets/images/game/answers/heir.jpg');
+			height: image-height('../assets/images/game/answers/heir.jpg');
+		}
+
+		&--yes{
+			bottom: 93px;
+			left: 83px;
+
+			background: url(../images/game/answers/yes.jpg) 50% 0 no-repeat;
+			width: image-width('../assets/images/game/answers/yes.jpg');
+			height: image-height('../assets/images/game/answers/yes.jpg');
+		}
+
+		&--china{
+			bottom: 83px;
+			right: 76px;
+
+			background: url(../images/game/answers/china.jpg) 50% 0 no-repeat;
+			width: image-width('../assets/images/game/answers/china.jpg');
+			height: image-height('../assets/images/game/answers/china.jpg');
+		}
+
+		&--green-bird{
+			bottom: 134px;
+			right: 101px;
+
+			background: url(../images/game/answers/green-bird.jpg) 50% 0 no-repeat;
+			width: image-width('../assets/images/game/answers/green-bird.jpg');
+			height: image-height('../assets/images/game/answers/green-bird.jpg');
+		}
+
+
+		&--parents{
+			top: 0px;
+			left: 0px;
+
+			background: url(../images/game/answers/parents.jpg) 50% 0 no-repeat;
+			width: image-width('../assets/images/game/answers/parents.jpg');
+			height: image-height('../assets/images/game/answers/parents.jpg');
+		}
+
+		&--wolf-1{
+			top: 90px;
+			left: 163px;
+
+			background: url(../images/game/answers/wolf-1.jpg) 50% 0 no-repeat;
+			width: image-width('../assets/images/game/answers/wolf-1.jpg');
+			height: image-height('../assets/images/game/answers/wolf-1.jpg');
+		}
+
+		&--wolf-2{
+			top: 0px;
+			right: 97px;
+
+			background: url(../images/game/answers/wolf-2.jpg) 50% 0 no-repeat;
+			width: image-width('../assets/images/game/answers/wolf-2.jpg');
+			height: image-height('../assets/images/game/answers/wolf-2.jpg');
+		}
+
+		&--boy{
+			top: 139px;
+			right: 0px;
+
+			background: url(../images/game/answers/boy.jpg) 50% 0 no-repeat;
+			width: image-width('../assets/images/game/answers/boy.jpg');
+			height: image-height('../assets/images/game/answers/boy.jpg');
+		}
+
+		&--visible{
+			opacity: 1;
+			visibility: visible;
+		}
 	}
 
 	&__button{
@@ -829,7 +937,7 @@
 		path{
 			fill: transparent;
 			cursor: pointer;
-			//fill: rgba(0,0,0,.5);
+			//fill: rgba(0,0,0,.9);
 		}
 
 		path:hover{
