@@ -6,7 +6,7 @@ import { HTMLencode, HTMLdecode } from '../helpers/escape';
 import { CommentsOptions, PromoOptions } from 'appSettings';
 
 import * as visual from '../helpers/visual';
-import * as sort from '../helpers/sort';
+//import * as sort from '../helpers/sort';
 
 import * as loadingActions 		from '../actions/loading';
 import * as errorActions 		from '../actions/error';
@@ -222,11 +222,16 @@ export function getAllResults() {
 					try{
 						const value = JSON.parse(HTMLdecode(key.Value));	
 
+						const totalPoints = value.gamePoints + value.quizPoints + value.friendsIds.length * 5;
+						const totalTime = value.gameTime + value.quizTime;
+						const forSort = totalPoints - totalTime / 10000000000;
+
 						return {
 							...key,
 							...{
-								totalPoints: value.gamePoints + value.quizPoints + value.friendsIds.length * 5,
-								totalTime: value.gameTime + value.quizTime,
+								totalPoints,
+								totalTime,
+								forSort,
 							},
 						}
 
@@ -238,10 +243,15 @@ export function getAllResults() {
 				})
 				.filter( key => key );
 
+				//console.log(resultKeys);
+
 				const sortedResultKeys = [...resultKeys]
-				.sort(sort.sortBy('totalPoints', {
-					name:'totalTime', primer: parseInt, reverse: true
-				}))
+				//.sort(sort.sortBy('totalPoints', {
+				//	name:'totalTime', primer: parseInt, reverse: true
+				//}))
+				.sort((a, b) => {
+					return b.forSort - a.forSort;
+				})
 				.slice(0, 100); //get top 100
 
 				dispatch(topActions.setKeys(sortedResultKeys));
