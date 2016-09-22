@@ -92,7 +92,10 @@ class Only extends React.Component {
 										</div>
 
 										<div className="people__name">
-											<a href={PromoOptions.server + '/user/user.aspx?user=' + item.user.id} class="people__href" target="_blank">
+											<a 	href={PromoOptions.server + '/user/user.aspx?user=' + item.user.id} 
+												className="people__href" 
+												target="_blank"
+											>
 												{item.user.firstName}
 											</a>
 										</div>

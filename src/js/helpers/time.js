@@ -10,7 +10,7 @@ export 	function parseTime(milliseconds){
 	//console.log(Math.floor(seconds/60));
 	//console.log(Math.floor(130/60));
 	//console.log(((milliseconds/(1000*60))%60));
-	console.log(minutes);
+	//console.log(minutes);
 
 	return '' + minutes + ':' + seconds;
 } 

@@ -210,8 +210,10 @@ export function getAllResults() {
 
 		dispatch(loadingActions.loadingShow());	
 
-		return API.getKeysFromDB('results', 1, 1000)
+		return API.getKeysFromDB('results', 1, 10000)
 		.then( results => {
+
+			console.log(results);
 						
 			if (results.Keys.length > 0){
 				
@@ -244,7 +246,7 @@ export function getAllResults() {
 
 				dispatch(topActions.setKeys(sortedResultKeys));
 
-				console.log(sortedResultKeys);
+				//console.log(sortedResultKeys);
 
 				const usersIds = sortedResultKeys.map( key => key.UserId);
 			
