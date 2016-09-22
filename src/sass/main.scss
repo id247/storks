@@ -110,6 +110,31 @@
 		font-family: $sans;
 		font-size: 18px;
 		font-weight: 400;
+
+		&--hidden{
+			display: none;
+		}
+	}
+
+	&__buttons{
+		text-align: center;
+		margin: 0 0 30px;
+	}
+
+	&__button-placeholder{
+		display: inline-block;
+		vertical-align: middle;
+		margin: 0 10px;
+	}
+
+	&__button{
+		min-width: 200px;
+		opacity: .8;
+
+		&:hover,
+		&--active{
+			opacity: 1;
+		}
 	}
 }
 

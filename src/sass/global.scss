@@ -42,12 +42,7 @@ span{
 	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQIW2NkAAIAAAoAAggA9GkAAAAASUVORK5CYII=); 
 }
 
-p{
-	margin: 0 0 1em;
-	&:last-child{
-		margin: 0;
-	}
-}
+
 
 strong{
 	font-weight: 700;
@@ -65,4 +60,23 @@ sup{
 .text{
 	font-size: 16px;
 	line-height: (24/16);
+
+	p{
+		margin: 0 0 1em;
+		&:last-child{
+			margin: 0;
+		}
+	}
+
+	strong{
+		font-weight: 700;
+	}
+
+	a{
+		border-bottom: 1px solid;
+		transition: all .3s;
+		&:hover{
+			border-color: transparent;
+		}	
+	}
 }
