@@ -9,23 +9,39 @@
 	background: #2d64b6;
 	min-height: 100vh;
 
+	background: #2d64b6 url(../images/bg/home.jpg) 50% 50% no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	
 	&__copy,
-	&__age{
-		text-indent: -9999px;
+	&__rules,
+	&__age{		
 		position: fixed;
 		z-index: 200;
 	}
 
 	&__copy{
+		text-indent: -9999px;
 		bottom: 15px;
 		left: 15px;
 		@include sprite($copy);
 	}
 
 	&__age{
+		text-indent: -9999px;
 		top: 5px;
 		right: 5px;
 		@include sprite($age);
+	}
+
+	&__rules{
+		position: absolute;
+		right: 15px;
+		bottom: 15px;
+		font-family: $sans;
+		font-weight: 400;
+		color: #fff;
+		font-size: 14px;
 	}
 
 }
@@ -39,7 +55,7 @@
 
 	&__wrap{
 		@include clearfix;
-		max-width: 1000px;
+		max-width: 800px;
 		padding: 0 10px;
 		margin: auto;
 	}
@@ -57,6 +73,45 @@
 	}
 }
 
+
+/* ==========================================================================
+ * page
+ * ========================================================================== */
+
+.page{
+	color: #fff;
+
+
+	&__logo{
+		position: fixed;
+		top: 30px;
+		left: 10px;
+	}
+
+	&__back-placeholder{
+		text-align: center;
+		margin: 0 0 20px;
+	}
+
+	&__back{
+		opacity: .5;
+
+		&:hover{
+			opacity: 1;
+		}
+	}
+
+	&__title{
+		color: $orange;
+		text-transform: uppercase;
+	}
+
+	&__text{
+		font-family: $sans;
+		font-size: 18px;
+		font-weight: 400;
+	}
+}
 
 /* ==========================================================================
  * app

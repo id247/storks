@@ -212,8 +212,7 @@ export function getAllResults() {
 
 		return API.getKeysFromDB('results', 1, 1000)
 		.then( results => {
-			dispatch(loadingActions.loadingHide());
-			
+						
 			if (results.Keys.length > 0){
 				
 				const resultKeys = results.Keys.map( key => {
@@ -253,7 +252,8 @@ export function getAllResults() {
 			}
 
 		})		
-		.then( users => {			
+		.then( users => {		
+			dispatch(loadingActions.loadingHide());	
 			dispatch(topActions.setUsers(users));
 		})
 		.catch( err => { 
