@@ -7,7 +7,7 @@ const CommentsEmpty = (props) => (
 
 		<div className="comments-empty__text">
 			<p>
-				Историй еще нет.
+				
 			</p>
 		</div>
 

@@ -60,12 +60,13 @@ $comments-blue: #134987;
 
 	&__list{
 		text-align: center;
+		margin: 0 0 -10px;
 	}
 	
 	&__item{
 		display: inline-block;
 		vertical-align: top;
-		margin: 0 5px;
+		margin: 0 5px 10px;
 
 		// a{
 		// 	font-size: 22px;
@@ -176,7 +177,8 @@ $comments-blue: #134987;
 		font-family: $sans;
 		font-size: 18px;
 		line-height: (24/18);
-		pointer-events: none;
+		cursor: text;
+		//pointer-events: none;
 	}
 
 	&__textarea{
@@ -189,6 +191,7 @@ $comments-blue: #134987;
 		line-height: (24/18);
 		//height: 140px;
 		//border-radius: 5px;
+		
 		//
 		&.error{
 			border-color: #ffa8a8;

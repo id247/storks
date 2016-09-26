@@ -78,6 +78,7 @@ class Form extends React.Component {
 					<textarea 
 						name="message" 
 						cols="30" 
+						id="comments-form-message"
 						rows={7}
 						className="comments-form__textarea"
 						placeholder=""
@@ -85,7 +86,8 @@ class Form extends React.Component {
 						onChange={this._messageChangeHandler()}
 					/>
 
-					<div className="comments-form__placeholder"
+					<label className="comments-form__placeholder"
+						htmlFor="comments-form-message"
 						style={{
 							display: props.commentsForm.message.length > 0 ? 'none' : '',
 						}}
@@ -93,7 +95,7 @@ class Form extends React.Component {
 						Например: <br/>
 						— Мам, ты меня откуда скачала? <br/>
 						— Я тебя родила, сынок!!
-					</div>
+					</label>
 
 				</div>
 

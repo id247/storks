@@ -23,6 +23,8 @@ class Comments extends React.Component {
 
 	componentWillReceiveProps(nextProps){
 
+		console.log(nextProps);
+
 		const { props } = this;
 		const oldPageNumber = props.pageNumber ? parseInt(props.pageNumber) : 1;
 		const newPageNumber = nextProps.pageNumber ? parseInt(nextProps.pageNumber) : 1;
@@ -85,6 +87,7 @@ class Comments extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
 	commentsTotalCount: state.comments.itemsTotalCount,
+	pageNumber: state.comments.page,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

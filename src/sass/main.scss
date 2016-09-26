@@ -18,6 +18,10 @@
 	&__age{		
 		position: fixed;
 		z-index: 200;
+		
+		@media (max-width: 1200px){
+			position: absolute;
+		}
 	}
 
 	&__copy{
@@ -86,6 +90,7 @@
 		position: fixed;
 		top: 30px;
 		left: 10px;
+
 	}
 
 	&__back-placeholder{
@@ -183,12 +188,20 @@
 		position: fixed;
 		top: 30px;
 		left: 10px;
+
+		@media (max-width: 1200px){
+			position: absolute;
+		}
 	}
 	
 	&__counters{
 		position: fixed;
 		top: 140px;
 		left: 0;
+
+		@media (max-width: 1200px){
+			position: absolute;
+		}
 	}
 
 	&__content{
