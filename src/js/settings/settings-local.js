@@ -46,7 +46,7 @@ export const PromoOptions = {
 }
 
 export const CommentsOptions = {	
-	pageSize: 5,
+	pageSize: 15,
 	adminId: [
 		'1000005031742'
 	],

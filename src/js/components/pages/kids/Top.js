@@ -46,6 +46,64 @@ class Only extends React.Component {
 
 	}
 
+	_saveTopHandler = () => (e) => {
+		e.preventDefault();
+
+		this.props.saveResults();
+	}
+
+	_deleteTopHandler = () => (e) => {
+		e.preventDefault();
+
+		this.props.deleteResults();
+	}
+
+	_adminButtons(){
+		const { props } = this;
+
+		if (props.profile.roles.indexOf('System') === -1){
+			return null;
+		}
+
+		return(
+			<div>
+				<br/><br/>
+			<p>
+				Кнопка для админа, не трогать!
+			</p>
+			{
+				props.top.fixed
+				?
+				(
+				<Button
+					mixClass="team-select__button"
+					size="s"
+					color="orange"
+					type="button"
+					onClickHandler={this._deleteTopHandler()}
+				>
+					<span className="button__text">Удалить зафиксированный топ</span>
+				</Button>
+				)
+				:
+				(
+				<Button
+					mixClass="team-select__button"
+					size="s"
+					color="orange"
+					type="button"
+					onClickHandler={this._saveTopHandler()}
+				>
+					<span className="button__text">Зафиксировать топ</span>
+				</Button>
+				)
+			}
+			<br/><br/>
+			</div>
+
+		);
+	}
+
 	render(){
 		const { props } = this;
 
@@ -72,6 +130,20 @@ class Only extends React.Component {
 					<h1 className="app__title">
 						РЕЙТИНГ УЧАСТНИКОВ ТОП 100
 					</h1>
+
+					{this._adminButtons()}
+
+					{
+						props.top.fixed 
+						? 
+						(
+							<div className="top__fixed">
+								Конкурс завершен 3.09.2016 в 10:00 (Мск). <br/> Результаты больше не обновляются!
+							</div>
+						)
+						:
+						null
+					}
 
 					<div className="top__people people">
 
@@ -140,6 +212,8 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	getAllResults: () => dispatch(asyncActions.getAllResults()),
+	saveResults: () => dispatch(asyncActions.saveResults()),
+	deleteResults: () => dispatch(asyncActions.deleteResults()),
 	redirect: (page) => dispatch(pageActions.setPageWithoutHistory(page)),
 	goTo: (page) => dispatch(pageActions.setPage(page)),
 });

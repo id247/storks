@@ -15,4 +15,18 @@ export function setUsers(users) {
 	}
 };
 
+export const TOP_FIX = 'TOP_FIX';
+export const TOP_UNFIX = 'TOP_UNFIX';
+
+export function fix() {
+	return {
+		type: TOP_FIX,
+	}
+};
+export function unfix() {
+	return {
+		type: TOP_UNFIX,
+	}
+};
+
 

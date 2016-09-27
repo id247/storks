@@ -5,7 +5,7 @@ import * as actions from '../actions/comments';
 export function list(state = [], action) {
 	switch (action.type) {
 		case actions.COMMENTS_ADD_ITEMS:
-			return  action.payload.comments.Keys;
+			return  action.payload.comments.Keys ? action.payload.comments.Keys : state;
 
 		default:
 			return state;
@@ -15,7 +15,7 @@ export function list(state = [], action) {
 export function counters(state = [], action) {
 	switch (action.type) {
 		case actions.COMMENTS_ADD_ITEMS:
-			return  action.payload.counters.Counters;
+			return  action.payload.counters ? action.payload.counters : state;
 
 		default:
 			return state;

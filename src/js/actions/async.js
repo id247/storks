@@ -64,6 +64,72 @@ export function catchError(err){
 	}
 }
 
+
+//chunk arrays and send in to getPromisesFunc function wich returns a Promise or array of Promises
+function getChunkPromises(items, chunkLength = 10, getPromisesFunc){
+
+	function isIterable(obj) {
+		// checks for null and undefined
+		if (obj == null) {
+		return false;
+		}
+		return typeof obj[Symbol.iterator] === 'function';
+	}
+
+	function flatArrays(arrays){
+		return [].concat.apply([], arrays);
+	}
+
+	function getChunks(items, chunkLength = 10){
+
+		const chunks = [];
+
+		for (let i = 0; i < items.length ; i+=chunkLength){
+			chunks.push(items.slice(i,i+chunkLength));
+		}
+
+		return chunks;
+	}
+
+	return new Promise( (resolve, reject) => {
+
+		let count = 0;
+		const results = [];
+		const itemsChunks = getChunks(items, chunkLength);
+
+		itemsChunks.map( itemsChunk => {
+			count++;
+
+			setTimeout(() => {
+
+				let promises = getPromisesFunc(itemsChunk); 
+
+				console.log('send chunk');
+
+				//in single Promise - push in to array for Promise.all
+				if (!isIterable(promises)){
+					promises = [promises];
+				}
+
+				Promise.all(promises)
+				.then( values => {
+					results.push(values);
+
+					if (results.length === count){
+						resolve( flatArrays(results) );
+					}
+				})
+				.catch( err => {
+					reject( err );
+				});
+
+
+			}, count*500);
+		});
+	});
+}
+
+
 // authorisation
 
 export function login(pageAfterLogin = '/') {
@@ -210,14 +276,68 @@ export function getAllResults() {
 
 		dispatch(loadingActions.loadingShow());	
 
-		return API.getKeysFromDB('results', 1, 10000)
+		return API.getKeyFromDB('total-result')
+		.then( totalResult => {
+			dispatch(loadingActions.loadingHide());
+
+			dispatch(getAllSavedResults(totalResult));
+		})
+		.catch( err => { 
+			dispatch(loadingActions.loadingHide());	
+			
+			if (err.message === 404){
+				dispatch(getAllRealResults());
+			}else{
+				dispatch(catchError(err)); 				
+			}
+		});
+
+	}
+}
+
+export function getAllRealResults() {
+	return (dispatch, getState) => {
+
+		dispatch(loadingActions.loadingShow());	
+
+		let firstPageResults;
+
+		const keysPageSize = 100;
+
+		return API.getKeysFromDB('results', 1, keysPageSize)
 		.then( results => {
+			firstPageResults = results.Keys;
+
+			if (firstPageResults.length < firstPageResults){
+				return [];
+			}
+
+			const pagesCount = Math.ceil(results.Paging.count / keysPageSize);
+			const pageNumbers = Array.from(Array(pagesCount).keys());
+
+			console.log(pageNumbers);
+
+			return getChunkPromises(pageNumbers, 10, (pages) => {
+				console.log(pages);
+				return pages
+				.filter( page => page > 0) //filter out first page
+				.map( page => API.getKeysFromDB('results', page + 1,  keysPageSize) );
+			});
+
+		})
+		.then ( results => {
 
 			console.log(results);
+
+			const keys = results.reduce( (prev, res) => {
+				return [...prev, ...res.Keys];
+			}, []);
+
+			const allKeys = [...firstPageResults, ...keys];
 						
-			if (results.Keys.length > 0){
+			if (allKeys.length > 0){
 				
-				const resultKeys = results.Keys.map( key => {
+				const resultKeys = allKeys.map( key => {
 				
 					try{
 						const value = JSON.parse(HTMLdecode(key.Value));	
@@ -261,6 +381,8 @@ export function getAllResults() {
 				const usersIds = sortedResultKeys.map( key => key.UserId);
 			
 				return API.getUsers(usersIds);
+			}else{
+				dispatch(loadingActions.loadingHide());	
 			}
 
 		})		
@@ -276,6 +398,128 @@ export function getAllResults() {
 
 	}
 }
+
+export function getAllSavedResults(totalResults) {
+	return (dispatch, getState) => {
+
+		console.log(totalResults);
+
+		let parsedTotalResult = [];
+
+		try{
+			parsedTotalResult = JSON.parse(totalResults.Value.replace(/\'/g, '"'));
+		}catch(e){
+			console.error(e);
+		}
+
+		if (parsedTotalResult.length === 0){
+			console.error('no results');
+			return false;
+		}
+
+		console.log(parsedTotalResult);
+
+		dispatch(topActions.fix());
+		dispatch(topActions.setKeys(parsedTotalResult));
+
+		const usersIds = parsedTotalResult.map( item => item.UserId);
+
+		dispatch(loadingActions.loadingShow());	
+			
+		return API.getUsers(usersIds)
+		.then( users => {	
+			
+			console.log(users);
+
+			dispatch(loadingActions.loadingHide());	
+			dispatch(topActions.setUsers(users));
+		})
+		.catch( err => { 
+			dispatch(loadingActions.loadingHide());
+
+			dispatch(catchError(err)); 
+		});
+
+	}
+}
+
+
+export function saveResults() {
+
+	return (dispatch, getState) => {
+		dispatch(loadingActions.loadingShow());	
+
+		const top = getState().top.keys
+		.map( key => ({
+			UserId: key.UserId,
+			//forSort: key.forSort,
+			totalPoints: key.totalPoints,
+			totalTime: key.totalTime,
+		}));
+
+		
+		const data = {
+			key: 'total-result',
+			value: (JSON.stringify(top).replace(/"/g, '\'')),
+			permissionLevel: 'Public',
+			label: 'total-result',
+		}
+
+		console.log(data);
+
+		//return;
+
+		return API.addKeyToDB(data)
+		.then( (res) => {	
+
+			console.log('top saved!');
+			dispatch(topActions.fix());
+			dispatch(loadingActions.loadingHide());
+
+		})
+		.catch( err => { 
+			dispatch(loadingActions.loadingHide());
+
+			dispatch(catchError(err)); 
+		});
+	}
+}
+
+
+export function deleteResults() {
+
+	return (dispatch, getState) => {
+
+		const roles = getState().user.profile.roles;
+
+		if (roles.indexOf('System') === -1){
+			return false;
+		}
+
+		if (!confirm('Уверены что хотите удалить топ?')){
+			return false;
+		}
+
+		dispatch(loadingActions.loadingShow());	
+
+		return API.deleteKeyFromDB('total-result')
+		.then( (res) => {	
+			console.log(res);
+
+			console.log('топ удален');
+			dispatch(topActions.unfix());
+			dispatch(loadingActions.loadingHide());
+
+		})
+		.catch( err => { 
+			dispatch(loadingActions.loadingHide());
+
+			dispatch(catchError(err)); 
+		});
+	}
+}
+
+
 
 
 export function setQuizData(data) {
@@ -400,15 +644,47 @@ export function getComments() {
 
 		let comments;
 		let counters;
+		let firstPageCounters;
+
+		const countersPageSize = 100;
 
 		return API.getKeysFromDBdesc(label, pageNumber, CommentsOptions.pageSize)
 		.then( res => {
 			comments = res;
-			return API.getCoutersFromDBdesc(label);
+			return API.getCoutersFromDBdesc(label, 1, countersPageSize); //fist request to get counters total count
 		})
-		.then( res => {
-			counters = res;
+		.then( res => {			
+			firstPageCounters = res.Counters;
 
+			if (res.Paging.count < countersPageSize){
+				return []; //return empry array if 1 page is enouth
+			}
+
+			const pagesCount = Math.ceil(res.Paging.count / countersPageSize);
+			const pageNumbers = Array.from(Array(pagesCount).keys());
+
+			console.log(pageNumbers);
+
+			return getChunkPromises(pageNumbers, 10, (pages) => {
+				console.log(pages);
+				return pages
+				.filter( page => page > 0) //filter out first page
+				.map( page => API.getCoutersFromDBdesc(label, page + 1,  countersPageSize) );
+			});
+
+		})
+		.then( results => {
+
+			console.log(results);
+
+			const counters = results.reduce( (prev, res) => {
+				return [...prev, ...res.Counters];
+			}, []);
+
+			const allCounters = [...firstPageCounters, ...counters];
+			
+			console.log(counters);
+			
 			dispatch(loadingActions.loadingHide());
 
 			console.log(comments.Keys);
@@ -417,7 +693,7 @@ export function getComments() {
 			comments.Keys = comments.Keys.map( key => {
 				key.counter = false;
 
-				counters.Counters && counters.Counters.map( counter => {
+				allCounters.map( counter => {
 					if (parseInt(counter.Name) === key.Id){
 						key.counter = counter;
 					}
@@ -427,7 +703,7 @@ export function getComments() {
 			});
 
 			console.log(comments, counters);
-			dispatch(commentsActions.addItems({comments: comments, counters: counters}));
+			dispatch(commentsActions.addItems({comments: comments, counters: allCounters}));
 		})
 		.catch( err => { 
 			dispatch(loadingActions.loadingHide());
